@@ -16,13 +16,15 @@
         android:padding="8dp"
         android:scaleType="fitCenter"
         android:src="@drawable/home"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/botonCalendar"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/botonCalendar" />
 
     <ImageButton
         android:id="@+id/botonSearch"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="botón"
         android:padding="8dp"
@@ -42,13 +44,15 @@
         android:padding="8dp"
         android:scaleType="fitCenter"
         android:src="@drawable/user"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/botonCar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/botonCar" />
 
     <ImageButton
         android:id="@+id/botonCar"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginBottom="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="botón"
         android:padding="8dp"
@@ -62,7 +66,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="74dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/botonSearch"
@@ -74,6 +78,7 @@
         android:id="@+id/botonCalendar"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:layout_marginBottom="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="botón"
         android:padding="8dp"
