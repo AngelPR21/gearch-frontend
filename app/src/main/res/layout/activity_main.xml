@@ -88,4 +88,12 @@
         app:layout_constraintEnd_toStartOf="@+id/botonSearch"
         app:layout_constraintStart_toEndOf="@+id/botonHome" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/logo"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="10dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
