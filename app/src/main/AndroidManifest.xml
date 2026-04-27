@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gearchfrontend">
         <activity
-            android:name=".LoginActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
