@@ -20,11 +20,10 @@
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+        <!-- Cambiamos esto de abajo para que la primera pantalla sea el login -->
         <activity
+
             android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
