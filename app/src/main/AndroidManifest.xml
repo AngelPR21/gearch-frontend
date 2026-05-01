@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gearchfrontend">
         <activity
+            android:name=".ReservarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DetalleTallerActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainClienteActivity"
             android:exported="false" />
         <activity
@@ -19,10 +25,8 @@
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" />
-        <!-- Cambiamos esto de abajo para que la primera pantalla sea el login -->
+            android:exported="false" /> <!-- Cambiamos esto de abajo para que la primera pantalla sea el login -->
         <activity
-
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
