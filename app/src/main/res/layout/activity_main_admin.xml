@@ -78,10 +78,10 @@
 
             <Button
                 android:id="@+id/btnCerrarSesion"
-                android:text="Cerrar sesión"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#f44336"/>
+                android:backgroundTint="#FF0000"
+                android:text="Cerrar sesión" />
 
         </LinearLayout>
 
