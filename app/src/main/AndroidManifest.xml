@@ -12,10 +12,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gearchfrontend">
         <activity
-            android:name=".ReservarActivity"
+            android:name=".EditarTallerActivity"
             android:exported="false" />
         <activity
-            android:name=".DetalleTallerActivity"
+            android:name=".ResenasAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HorarioAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ServiciosAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CitasAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BuscarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EscribirResenaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AnadirVehiculoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MisVehiculosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MisCitasActivity"
             android:exported="false" />
         <activity
             android:name=".MainClienteActivity"
@@ -25,9 +49,12 @@
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
-            android:exported="false" /> <!-- Cambiamos esto de abajo para que la primera pantalla sea el login -->
+            android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
