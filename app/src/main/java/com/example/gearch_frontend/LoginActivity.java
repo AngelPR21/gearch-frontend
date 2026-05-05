@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
+import com.example.gearch_frontend.api.models.Usuario;
+import com.example.gearch_frontend.api.models.enums.RolUsuario;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -48,58 +50,46 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        // Validación básica
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Rellena todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Construir el body de la petición
         Map<String, String> credenciales = new HashMap<>();
         credenciales.put("email", email);
         credenciales.put("password", password);
 
-        // Llamada al backend
         ApiService api = ApiClient.getClient().create(ApiService.class);
-        api.login(credenciales).enqueue(new Callback<Map<String, Object>>() {
-
+        api.login(credenciales).enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
-
-                // Si el servidor ha respondido correctamente
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Usuario usuario = response.body();
 
-                    Map<String, Object> usuario = response.body();
-                    String rol = (String) usuario.get("rol");
-                    int id = ((Double) usuario.get("id")).intValue();
-
-                    // Guardamos el id y el rol para usarlos en otras pantallas
+                    // Guardamos los datos en SharedPreferences
                     SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
-                    prefs.edit().putInt("id", id).putString("rol", rol).apply();
-
-                    // Si es admin del taller guardamos también el id del taller
-                    if (usuario.containsKey("tallerAdministradoId")) {
-                        int tallerAdministradoId = ((Double) usuario.get("tallerAdministradoId")).intValue();
-                        prefs.edit().putInt("tallerAdministradoId", tallerAdministradoId).apply();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putLong("id", usuario.getId());
+                    editor.putString("rol", usuario.getRol().name());
+                    if (usuario.getTallerAdministradoId() != null) {
+                        editor.putLong("tallerAdministradoId", usuario.getTallerAdministradoId());
                     }
+                    editor.apply();
 
                     // Redirigir según el rol
-                    if ("ADMIN_TALLER".equals(rol)) {
+                    if (usuario.getRol() == RolUsuario.ADMIN_TALLER) {
                         startActivity(new Intent(LoginActivity.this, MainAdminActivity.class));
                     } else {
                         startActivity(new Intent(LoginActivity.this, MainClienteActivity.class));
                     }
-                    finish(); // Cierra el login para no volver atrás
-
+                    finish();
                 } else {
-                    // El servidor ha respondido pero con error (credenciales incorrectas)
                     Toast.makeText(LoginActivity.this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Map<String, Object>> call, Throwable t) {
-                // Error de conexión, el backend no está arrancado
+            public void onFailure(Call<Usuario> call, Throwable t) {
                 Toast.makeText(LoginActivity.this, "Error de conexión con el servidor", Toast.LENGTH_SHORT).show();
             }
         });
