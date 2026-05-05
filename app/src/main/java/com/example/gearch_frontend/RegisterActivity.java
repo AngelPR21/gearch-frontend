@@ -9,6 +9,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Taller;
@@ -21,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     private RadioGroup rgTipoUsuario;
     private LinearLayout layoutTaller;
