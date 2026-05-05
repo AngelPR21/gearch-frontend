@@ -136,7 +136,7 @@ public class RegisterActivity extends BaseActivity {
         request.put("usuario", usuario);
         request.put("taller", taller);
 
-        api.registrarAdminTaller(request).enqueue(new Callback<Usuario>() {//espera recibir un objeto usuario cuando el servidor responda
+        api.registrarAdminTaller(request).enqueue(new Callback<Usuario>() {//callback espera recibir un objeto usuario cuando el servidor responda
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
