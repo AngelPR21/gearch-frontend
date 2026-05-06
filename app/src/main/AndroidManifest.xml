@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- Esto para usar internet necesario para retrofit -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permiso para obtener la ubicacion aproximada con el WiFi o la red -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <!--Esto para usar internet necesario para retrofit-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!-- Permiso para obtener la ubicacion aproximada con el WiFi o la red -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-    <!--EXPLICACION DE PORQUE NO VA SIN usesClearTextTrafficPermited-->
-    <!--Desde Android 9 (API 28) Google bloquea por defecto todas
-    las conexiones HTTP sin cifrar para forzar a las apps a usar HTTPS por seguridad.
-     Como el backend usa HTTP (http://10.0.2.2:8080), Android lo bloquea.
-    Con cleartextTrafficPermitted="true" Android permite HTTP para esta app. -->
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -22,7 +13,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Gearchfrontend">
+        android:theme="@style/Theme.Gearchfrontend"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ResenaDetalleActivity"
+            android:exported="false" />
         <activity
             android:name=".EditarTallerActivity"
             android:exported="false" />

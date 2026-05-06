@@ -13,6 +13,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.gearch_frontend.adapters.TallerAdapter;
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Cita;

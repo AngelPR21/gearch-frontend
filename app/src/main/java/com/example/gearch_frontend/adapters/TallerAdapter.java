@@ -1,4 +1,4 @@
-package com.example.gearch_frontend;
+package com.example.gearch_frontend.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gearch_frontend.R;
 import com.example.gearch_frontend.api.models.Taller;
 
 import java.util.List;

@@ -1,8 +1,11 @@
 package com.example.gearch_frontend.api;
 
 import com.example.gearch_frontend.api.models.Cita;
+import com.example.gearch_frontend.api.models.Resena;
+import com.example.gearch_frontend.api.models.Servicio;
 import com.example.gearch_frontend.api.models.Taller;
 import com.example.gearch_frontend.api.models.Usuario;
+import com.example.gearch_frontend.api.models.Vehiculo;
 
 import java.util.List;
 import java.util.Map;
@@ -39,4 +42,37 @@ public interface ApiService {
     // GET /api/citas/usuario/{usuarioId}
     @GET("api/citas/usuario/{usuarioId}")
     Call<List<Cita>> getCitasUsuario(@Path("usuarioId") Long usuarioId);
+
+    // GET /api/talleres/{id}
+    @GET("api/talleres/{id}")
+    Call<Taller> getTallerById(@Path("id") Long id);
+
+    // GET /api/servicios/taller/{tallerId}
+    @GET("api/servicios/taller/{tallerId}")
+    Call<List<Servicio>> getServiciosByTaller(@Path("tallerId") Long tallerId);
+
+    // GET /api/resenas/taller/{tallerId}
+    @GET("api/resenas/taller/{tallerId}")
+    Call<List<Resena>> getResenasByTaller(@Path("tallerId") Long tallerId);
+
+    // GET /api/disponibilidad/taller/{tallerId}/horas-libres?fecha=2025-06-10
+    @GET("api/disponibilidad/taller/{tallerId}/horas-libres")
+    Call<List<String>> getHorasLibres(
+            @Path("tallerId") Long tallerId,
+            @Query("fecha") String fecha
+    );
+
+    // GET /api/vehiculos/usuario/{usuarioId}
+    @GET("api/vehiculos/usuario/{usuarioId}")
+    Call<List<Vehiculo>> getVehiculosUsuario(@Path("usuarioId") Long usuarioId);
+
+    // POST /api/citas
+    @POST("api/citas")
+    Call<Cita> crearCita(
+            @Query("usuarioId") Long usuarioId,
+            @Query("tallerId") Long tallerId,
+            @Query("servicioId") Long servicioId,
+            @Query("vehiculoId") Long vehiculoId,
+            @Body Cita cita
+    );
 }

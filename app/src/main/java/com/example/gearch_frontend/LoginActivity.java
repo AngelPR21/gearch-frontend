@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnLogin;
+    private ApiService api;
     private TextView tvRegistro;
 
     @Override
@@ -59,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         credenciales.put("email", email);
         credenciales.put("password", password);
 
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+        api = ApiClient.getClient().create(ApiService.class);
         api.login(credenciales).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {

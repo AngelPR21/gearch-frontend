@@ -32,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private RadioGroup rgTipoUsuario;
     private LinearLayout layoutTaller;
+    private ApiService api;
     private EditText etNombre, etApellidos, etEmail, etPassword, etTelefono;
     private EditText etNombreTaller, etDireccion, etTelefonoTaller, etDescripcion;
     private Button btnRegistrar;
@@ -91,7 +92,7 @@ public class RegisterActivity extends AppCompatActivity {
         usuario.setPassword(password);
         usuario.setTelefono(telefono);
 
-        ApiService api = ApiClient.getClient().create(ApiService.class);
+        api = ApiClient.getClient().create(ApiService.class);
 
         if (rgTipoUsuario.getCheckedRadioButtonId() == R.id.rbCliente) {
             registrarCliente(api, usuario);
