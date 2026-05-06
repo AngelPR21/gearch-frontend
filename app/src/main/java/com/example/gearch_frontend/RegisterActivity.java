@@ -8,6 +8,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.location.Geocoder;
+import android.location.Address;
+
+import java.io.IOException;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -132,6 +137,21 @@ public class RegisterActivity extends AppCompatActivity {
         taller.setDireccion(direccion);
         taller.setTelefono(telefonoTaller);
         taller.setDescripcion(descripcion);
+
+        // Convertir dirección a coordenadas
+        try{
+            Geocoder geocoder = new Geocoder(RegisterActivity.this); //Esto es simplemente para que pase el nombre de la direccion a coordenadas( geocodificacion)
+            List<Address> direcciones = geocoder.getFromLocationName(direccion, 1);//el 1 es para que devuelva 1 coincidencia de esa direccion ya que pueden haber varias
+            if (direcciones != null && !direcciones.isEmpty()) {
+                taller.setLatitud(direcciones.get(0).getLatitude());
+                taller.setLongitud(direcciones.get(0).getLongitude());
+            }
+        }catch(IOException e){
+            //Si falla se puede añadir a la bbdd como null, no aparecera en cercanos pero se puede buscar igual
+            Toast.makeText(RegisterActivity.this, "No se pudieron obtener las coordenadas", Toast.LENGTH_SHORT).show();
+
+        }
+
 
         // El backend espera el record con el usuario y taller
         Map<String, Object> request = new HashMap<>();

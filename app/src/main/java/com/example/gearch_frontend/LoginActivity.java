@@ -66,7 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Usuario usuario = response.body();
 
-                    // Guardamos los datos en SharedPreferences
+                    // Guardamos los datos en SharedPreferences que es basicamente como Localstorage de javascript
+                    //nos permite guardar cosas simples en un fichero xml interno
                     SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putLong("id", usuario.getId());

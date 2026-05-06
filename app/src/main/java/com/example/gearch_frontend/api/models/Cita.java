@@ -9,6 +9,7 @@ public class Cita {
     private String fechaHora;
     private EstadoCita estado;
     private String notas;
+    private Taller taller;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -21,4 +22,8 @@ public class Cita {
 
     public String getNotas() { return notas; }
     public void setNotas(String notas) { this.notas = notas; }
+
+    public Taller getTaller() { return taller; }
+
+    public void setTaller(Taller taller) { this.taller = taller; }
 }
