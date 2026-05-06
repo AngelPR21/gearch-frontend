@@ -7,25 +7,21 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Cita;
 import com.example.gearch_frontend.api.models.Taller;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-
+import com.google.android.gms.location.Priority;
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -148,36 +144,32 @@ public class MainClienteActivity extends AppCompatActivity {
     }
 
     // Obtiene la ultima ubicacion conocida del dispositivo
+    //NO funciona si usamos el emulador porque no tiene una ubicacion,
+    // es una maquina virtual y devuelve null por lo que tendriamos que llamar a cargar talleres cercanos con unas coord ya puestas
     private void obtenerUbicacionYCargar() {
-        //getLastLocation obliga a comprobar que tenemos el permiso
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) return;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {return;};
 
-        // getLastLocation devuelve la ultima ubicacion conocida del GPS
-        locationClient.getLastLocation().addOnSuccessListener(ubicacion -> {
-            if (ubicacion != null) {
-                // Tenemos ubicacion, cargamos los talleres cercanos
-                cargarTalleresCercanos(ubicacion.getLatitude(), ubicacion.getLongitude());
-            } else {
-                Toast.makeText(this, "No se pudo obtener la ubicación", Toast.LENGTH_SHORT).show();
-            }
-        });
+        //Obtenemos la ubicacion real, se llama solo una vez cada vez que la abres
+        locationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
+                //este addOnSuccesListener es el onResponse del retrofit pero en getCurrentLocation
+                .addOnSuccessListener(ubicacion -> {
+                    if (ubicacion != null) {
+                        cargarTalleresCercanos(ubicacion.getLatitude(), ubicacion.getLongitude());
+                    } else {
+                        Toast.makeText(MainClienteActivity.this, "No se pudo obtener la ubicación", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     // Llama al backend con las coordenadas y muestra los talleres en un radio de 10km
     private void cargarTalleresCercanos(double lat, double lng) {
-        //radio 10 son 10 km
         api.getTalleresCercanos(lat, lng, 10).enqueue(new Callback<List<Taller>>() {
             @Override
             public void onResponse(Call<List<Taller>> call, Response<List<Taller>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-
-                    // Creamos el adapter con los talleres cercanos y el listener de click
-                    adapterCercanos = new TallerAdapter(MainClienteActivity.this, response.body(), v -> {//este lamba acorta el onclicklistener directamente
-                        // Al pulsar un taller buscamos el ViewHolder que contiene la vista pulsada
+                    adapterCercanos = new TallerAdapter(MainClienteActivity.this, response.body(), v -> {
                         TallerAdapter.ViewHolder vh = (TallerAdapter.ViewHolder) rvCercanos.findContainingViewHolder(v);
                         if (vh != null) {
-                            // Abrimos el detalle del taller pasandole su id
                             Intent intent = new Intent(MainClienteActivity.this, DetalleTallerActivity.class);
                             intent.putExtra("tallerId", vh.getTaller().getId());
                             startActivity(intent);
