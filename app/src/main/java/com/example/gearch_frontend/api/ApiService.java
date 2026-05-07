@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -75,4 +77,19 @@ public interface ApiService {
             @Query("vehiculoId") Long vehiculoId,
             @Body Cita cita
     );
+    // PATCH /api/citas/{id}/estado
+    @PATCH("api/citas/{id}/estado")
+    Call<Cita> actualizarEstadoCita(@Path("id") Long id, @Query("estado") String estado);
+
+    @DELETE("api/vehiculos/{id}")
+    Call<Void> eliminarVehiculo(@Path("id") Long id);
+
+    @POST("api/vehiculos/usuario/{usuarioId}")
+    Call<Vehiculo> crearVehiculo(@Path("usuarioId") Long usuarioId, @Body Vehiculo vehiculo);
+
+    @POST("api/resenas")
+    Call<Resena> crearResena(@Query("usuarioId") Long usuarioId, @Query("tallerId") Long tallerId, @Body Resena resena);
+
+    @GET("api/talleres/buscar")
+    Call<List<Taller>> buscarTalleres(@Query("nombre") String nombre);
 }

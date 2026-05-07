@@ -1,24 +1,89 @@
 package com.example.gearch_frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.gearch_frontend.adapters.TallerAdapter;
+import com.example.gearch_frontend.api.ApiClient;
+import com.example.gearch_frontend.api.ApiService;
+import com.example.gearch_frontend.api.models.Taller;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BuscarActivity extends AppCompatActivity {
+
+    private EditText etBuscar;
+    private Button btnBuscarTaller;
+    private RecyclerView rvResultados;
+    private ApiService api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_buscar);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        etBuscar = findViewById(R.id.etBuscar);
+        btnBuscarTaller = findViewById(R.id.btnBuscarTaller);
+        rvResultados = findViewById(R.id.rvResultados);
+
+        api = ApiClient.getClient().create(ApiService.class);
+
+        // Botones de navegación inferior
+        ImageButton ibHome = findViewById(R.id.btnHome);
+        ImageButton ibCitas = findViewById(R.id.btnCitas);
+        ImageButton ibBuscar = findViewById(R.id.btnBuscar);
+        ImageButton ibVehiculos = findViewById(R.id.btnVehiculos);
+        ImageButton ibUsuario = findViewById(R.id.btnUsuario);
+
+        ibHome.setOnClickListener(v -> startActivity(new Intent(this, MainClienteActivity.class)));
+        ibCitas.setOnClickListener(v -> startActivity(new Intent(this, MisCitasActivity.class)));
+        ibVehiculos.setOnClickListener(v -> startActivity(new Intent(this, MisVehiculosActivity.class)));
+
+        btnBuscarTaller.setOnClickListener(v -> buscar());
+    }
+
+    private void buscar() {
+        String nombre = etBuscar.getText().toString().trim();
+
+        if (nombre.isEmpty()) {
+            Toast.makeText(this, "Escribe el nombre del taller", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        api.buscarTalleres(nombre).enqueue(new Callback<List<Taller>>() {
+            @Override
+            public void onResponse(Call<List<Taller>> call, Response<List<Taller>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().isEmpty()) {
+                        Toast.makeText(BuscarActivity.this, "No se encontraron talleres", Toast.LENGTH_SHORT).show();
+                    }
+                    TallerAdapter adapter = new TallerAdapter(BuscarActivity.this, response.body(), v -> {
+                        TallerAdapter.ViewHolder vh = (TallerAdapter.ViewHolder) rvResultados.findContainingViewHolder(v);
+                        if (vh != null) {
+                            Intent intent = new Intent(BuscarActivity.this, DetalleTallerActivity.class);
+                            intent.putExtra("tallerId", vh.getTaller().getId());
+                            startActivity(intent);
+                        }
+                    });
+                    rvResultados.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Taller>> call, Throwable t) {
+                Toast.makeText(BuscarActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

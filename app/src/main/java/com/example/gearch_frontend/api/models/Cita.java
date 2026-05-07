@@ -4,6 +4,7 @@ import com.example.gearch_frontend.api.models.enums.EstadoCita;
 
 public class Cita {
     private Long id;
+    private Servicio servicio;
 
     //No se puede usar LocalDateTime porque Gson no lo convierte automatico, tocara hacerlo manual
     private String fechaHora;
@@ -26,4 +27,7 @@ public class Cita {
     public Taller getTaller() { return taller; }
 
     public void setTaller(Taller taller) { this.taller = taller; }
+
+    public Servicio getServicio() { return servicio; }
+    public void setServicio(Servicio servicio) { this.servicio = servicio; }
 }

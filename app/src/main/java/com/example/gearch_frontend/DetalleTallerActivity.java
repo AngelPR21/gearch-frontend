@@ -40,6 +40,7 @@ public class DetalleTallerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_taller);
 
+
         tvNombre = findViewById(R.id.tvNombreTaller);
         tvDireccion = findViewById(R.id.tvDireccion);
         tvTelefono = findViewById(R.id.tvTelefono);
