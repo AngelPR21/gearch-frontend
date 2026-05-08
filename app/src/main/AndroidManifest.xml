@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Gearchfrontend"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".PerfilActivity"
+            android:exported="false" />
+        <activity
             android:name=".ResenaDetalleActivity"
             android:exported="false" />
         <activity

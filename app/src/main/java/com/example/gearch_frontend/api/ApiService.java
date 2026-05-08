@@ -15,6 +15,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -92,4 +93,20 @@ public interface ApiService {
 
     @GET("api/talleres/buscar")
     Call<List<Taller>> buscarTalleres(@Query("nombre") String nombre);
+
+
+    // GET /api/usuarios/{id}
+    @GET("api/usuarios/{id}")
+    Call<Usuario> getUsuario(@Path("id") Long id);
+
+    // PUT /api/usuarios/{id}
+    @PUT("api/usuarios/{id}")
+    Call<Usuario> actualizarUsuario(@Path("id") Long id, @Body Usuario usuario);
+
+    // DELETE /api/usuarios/{id}
+    @DELETE("api/usuarios/{id}")
+    Call<Void> eliminarUsuario(@Path("id") Long id);
+
+
+
 }
