@@ -12,6 +12,15 @@ public class Cita {
     private String notas;
     private Taller taller;
 
+    private Usuario usuario;
+    private Vehiculo vehiculo;
+
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+
+    public Vehiculo getVehiculo() { return vehiculo; }
+    public void setVehiculo(Vehiculo vehiculo) { this.vehiculo = vehiculo; }
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

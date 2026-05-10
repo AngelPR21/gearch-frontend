@@ -1,6 +1,7 @@
 package com.example.gearch_frontend.api;
 
 import com.example.gearch_frontend.api.models.Cita;
+import com.example.gearch_frontend.api.models.DisponibilidadTaller;
 import com.example.gearch_frontend.api.models.Resena;
 import com.example.gearch_frontend.api.models.Servicio;
 import com.example.gearch_frontend.api.models.Taller;
@@ -9,13 +10,17 @@ import com.example.gearch_frontend.api.models.Vehiculo;
 
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -107,6 +112,41 @@ public interface ApiService {
     @DELETE("api/usuarios/{id}")
     Call<Void> eliminarUsuario(@Path("id") Long id);
 
+    // GET /api/citas/taller/{tallerId}
+    @GET("api/citas/taller/{tallerId}")
+    Call<List<Cita>> getCitasTaller(@Path("tallerId") Long tallerId);
 
+    // POST /api/admin/{adminId}/servicios
+    @POST("api/admin/{adminId}/servicios")
+    Call<Servicio> crearServicio(@Path("adminId") Long adminId, @Body Servicio servicio);
+
+    // DELETE /api/admin/{adminId}/servicios/{servicioId}
+    @DELETE("api/admin/{adminId}/servicios/{servicioId}")
+    Call<Void> eliminarServicio(@Path("adminId") Long adminId, @Path("servicioId") Long servicioId);
+
+    // GET /api/admin/{adminId}/horario
+    @GET("api/admin/{adminId}/horario")
+    Call<List<DisponibilidadTaller>> getHorario(@Path("adminId") Long adminId);
+
+    // POST /api/admin/{adminId}/horario
+    @POST("api/admin/{adminId}/horario")
+    Call<DisponibilidadTaller> crearHorario(@Path("adminId") Long adminId, @Body DisponibilidadTaller disponibilidad);
+
+    // DELETE /api/admin/{adminId}/horario/{disponibilidadId}
+    @DELETE("api/admin/{adminId}/horario/{disponibilidadId}")
+    Call<Void> eliminarHorario(@Path("adminId") Long adminId, @Path("disponibilidadId") Long disponibilidadId);
+
+    // GET /api/admin/{adminId}/taller
+    @GET("api/admin/{adminId}/taller")
+    Call<Taller> getMiTaller(@Path("adminId") Long adminId);
+
+    // PUT /api/admin/{adminId}/taller
+    @PUT("api/admin/{adminId}/taller")
+    Call<Taller> actualizarTaller(@Path("adminId") Long adminId, @Body Taller taller);
+
+    // POST /api/admin/{adminId}/taller/foto
+    @Multipart
+    @POST("api/admin/{adminId}/taller/foto")
+    Call<Void> subirFotoTaller(@Path("adminId") Long adminId, @Part MultipartBody.Part foto);
 
 }

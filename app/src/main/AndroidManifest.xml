@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Gearchfrontend"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".AnadirHorarioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AnadirServicioActivity"
+            android:exported="false" />
+        <activity
             android:name=".PerfilActivity"
             android:exported="false" />
         <activity
