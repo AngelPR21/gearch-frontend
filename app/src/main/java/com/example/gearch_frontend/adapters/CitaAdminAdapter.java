@@ -17,7 +17,7 @@ import com.example.gearch_frontend.api.models.enums.EstadoCita;
 import java.util.List;
 
 /*
- * Adaptador para mostrar la lista de citas del taller en el panel admin.
+ * Adaptador para mostrar la lista de citas del taller en el panel admin. Hola
  */
 public class CitaAdminAdapter extends RecyclerView.Adapter<CitaAdminAdapter.ViewHolder> {
 
