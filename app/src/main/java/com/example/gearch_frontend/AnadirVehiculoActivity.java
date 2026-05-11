@@ -16,6 +16,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla para anadir un nuevo vehiculo al perfil del usuario
+// Al guardar correctamente devuelve RESULT_OK a MisVehiculosActivity para que recargue la lista
 public class AnadirVehiculoActivity extends AppCompatActivity {
 
     private EditText etMarca, etModelo, etMatricula, etAnio, etColor, etCombustible;
@@ -52,9 +54,9 @@ public class AnadirVehiculoActivity extends AppCompatActivity {
         String color = etColor.getText().toString().trim();
         String combustible = etCombustible.getText().toString().trim();
 
-        // Validamos los campos obligatorios
+        // Marca, modelo y matricula son obligatorios
         if (marca.isEmpty() || modelo.isEmpty() || matricula.isEmpty()) {
-            Toast.makeText(this, "Marca, modelo y matrícula son obligatorios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Marca, modelo y matricula son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -65,7 +67,7 @@ public class AnadirVehiculoActivity extends AppCompatActivity {
         vehiculo.setColor(color.isEmpty() ? null : color);
         vehiculo.setCombustible(combustible.isEmpty() ? null : combustible);
 
-        // El año es opcional, solo lo ponemos si el usuario lo ha rellenado
+        // El anio es opcional
         if (!anioStr.isEmpty()) {
             vehiculo.setAnio(Integer.parseInt(anioStr));
         }
@@ -74,18 +76,18 @@ public class AnadirVehiculoActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(AnadirVehiculoActivity.this, "Vehículo añadido correctamente", Toast.LENGTH_SHORT).show();
-                    // Avisamos a MisVehiculosActivity que recargue la lista
+                    Toast.makeText(AnadirVehiculoActivity.this, "Vehiculo anadido correctamente", Toast.LENGTH_SHORT).show();
+                    // RESULT_OK indica a MisVehiculosActivity que recargue la lista
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(AnadirVehiculoActivity.this, "Error al añadir el vehículo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnadirVehiculoActivity.this, "Error al anadir el vehiculo", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Vehiculo> call, Throwable t) {
-                Toast.makeText(AnadirVehiculoActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnadirVehiculoActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

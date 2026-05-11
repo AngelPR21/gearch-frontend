@@ -1,6 +1,5 @@
 package com.example.gearch_frontend;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -13,18 +12,22 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.MultipartBody;
+
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Taller;
 
 import java.io.InputStream;
+
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla del admin para editar los datos y la foto de su taller
+// La latitud y longitud se mantienen igual porque no se pueden editar desde esta pantalla
 public class EditarTallerActivity extends AppCompatActivity {
 
     private ImageView ivFotoTaller;
@@ -34,12 +37,14 @@ public class EditarTallerActivity extends AppCompatActivity {
     private Long adminId;
     private Taller tallerActual;
 
-    // Launcher para seleccionar foto de la galería
+    // Launcher para seleccionar una foto de la galeria del movil
     ActivityResultLauncher<String> seleccionarFotoLauncher = registerForActivityResult(
             new ActivityResultContracts.GetContent(),
             uri -> {
                 if (uri != null) {
+                    // Mostramos la foto seleccionada en el ImageView
                     ivFotoTaller.setImageURI(uri);
+                    // La subimos al backend inmediatamente
                     subirFoto(uri);
                 }
             });
@@ -64,11 +69,13 @@ public class EditarTallerActivity extends AppCompatActivity {
 
         cargarTaller();
 
+        // "image/*" permite seleccionar cualquier tipo de imagen de la galeria
         btnCambiarFoto.setOnClickListener(v -> seleccionarFotoLauncher.launch("image/*"));
 
         btnGuardar.setOnClickListener(v -> guardarCambios());
     }
 
+    // Carga los datos actuales del taller y los muestra en los EditText
     private void cargarTaller() {
         api.getMiTaller(adminId).enqueue(new Callback<Taller>() {
             @Override
@@ -80,7 +87,7 @@ public class EditarTallerActivity extends AppCompatActivity {
                     etTelefono.setText(tallerActual.getTelefono());
                     etDescripcion.setText(tallerActual.getDescripcion());
 
-                    // Si tiene foto la mostramos, si no dejamos la por defecto
+                    // Si tiene foto la mostramos, si no dejamos la imagen por defecto del XML
                     if (tallerActual.getFotoPerfil() != null) {
                         ivFotoTaller.setImageBitmap(BitmapFactory.decodeByteArray(
                                 tallerActual.getFotoPerfil(), 0, tallerActual.getFotoPerfil().length));
@@ -102,16 +109,16 @@ public class EditarTallerActivity extends AppCompatActivity {
         String descripcion = etDescripcion.getText().toString().trim();
 
         if (nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
-            Toast.makeText(this, "Nombre, dirección y teléfono son obligatorios", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Nombre, direccion y telefono son obligatorios", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Mantenemos la latitud y longitud actuales ya que no se editan en esta pantalla
         Taller taller = new Taller();
         taller.setNombre(nombre);
         taller.setDireccion(direccion);
         taller.setTelefono(telefono);
         taller.setDescripcion(descripcion.isEmpty() ? null : descripcion);
+        // Mantenemos las coordenadas actuales ya que no se pueden editar desde esta pantalla
         taller.setLatitud(tallerActual.getLatitud());
         taller.setLongitud(tallerActual.getLongitud());
 
@@ -128,11 +135,12 @@ public class EditarTallerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Taller> call, Throwable t) {
-                Toast.makeText(EditarTallerActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditarTallerActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    // Lee la imagen seleccionada y la envia al backend como multipart
     private void subirFoto(Uri uri) {
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
@@ -140,6 +148,7 @@ public class EditarTallerActivity extends AppCompatActivity {
             inputStream.read(bytes);
             inputStream.close();
 
+            // MultipartBody.Part es el formato que usa HTTP para enviar archivos binarios
             RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), bytes);
             MultipartBody.Part part = MultipartBody.Part.createFormData("foto", "foto.jpg", requestBody);
 
@@ -155,7 +164,7 @@ public class EditarTallerActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(EditarTallerActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditarTallerActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {

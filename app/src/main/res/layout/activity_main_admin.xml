@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@+id/tvPuntuacion"
-                android:text="0.0 (0 reseñas)"
+                android:text="0.0 (0 resenas)"
                 android:textSize="16sp"
                 android:layout_marginBottom="40dp"
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
 
             <Button
                 android:id="@+id/btnResenas"
-                android:text="Ver reseñas"
+                android:text="Ver resenas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"/>
@@ -74,6 +74,13 @@
                 android:text="Editar taller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"/>
+
+            <Button
+                android:id="@+id/btnPerfil"
+                android:text="Mi perfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"/>
 
             <Button
@@ -81,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FF0000"
-                android:text="Cerrar sesión" />
+                android:text="Cerrar sesion" />
 
         </LinearLayout>
 

@@ -22,6 +22,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla del admin para gestionar el horario semanal del taller
+// Permite ver los dias configurados, anadir nuevos dias y eliminar los existentes
 public class HorarioAdminActivity extends AppCompatActivity {
 
     private RecyclerView rvHorario;
@@ -29,6 +31,7 @@ public class HorarioAdminActivity extends AppCompatActivity {
     private ApiService api;
     private Long adminId;
 
+    // Launcher para abrir AnadirHorarioActivity y recargar el horario al volver
     ActivityResultLauncher<Intent> anadirHorarioLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -85,16 +88,16 @@ public class HorarioAdminActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(HorarioAdminActivity.this, "Día eliminado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HorarioAdminActivity.this, "Dia eliminado", Toast.LENGTH_SHORT).show();
                     cargarHorario();
                 } else {
-                    Toast.makeText(HorarioAdminActivity.this, "Error al eliminar el día", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HorarioAdminActivity.this, "Error al eliminar el dia", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(HorarioAdminActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HorarioAdminActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

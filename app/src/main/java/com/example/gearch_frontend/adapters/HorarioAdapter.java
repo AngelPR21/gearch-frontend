@@ -15,9 +15,8 @@ import com.example.gearch_frontend.api.models.DisponibilidadTaller;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar el horario semanal del taller en el panel admin.
- */
+// Adaptador para mostrar el horario semanal del taller en el panel admin
+// Cada item muestra un dia con su hora de inicio, hora de fin e intervalo
 public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.ViewHolder> {
 
     private List<DisponibilidadTaller> horarios;
@@ -44,10 +43,12 @@ public class HorarioAdapter extends RecyclerView.Adapter<HorarioAdapter.ViewHold
         DisponibilidadTaller horario = horarios.get(position);
 
         holder.tvDia.setText(horario.getDiaSemana().toString());
-        // Mostramos solo HH:mm de cada hora
+
+        // El backend devuelve "HH:mm:ss", mostramos solo "HH:mm"
         String inicio = horario.getHoraInicio().length() >= 5 ? horario.getHoraInicio().substring(0, 5) : horario.getHoraInicio();
         String fin = horario.getHoraFin().length() >= 5 ? horario.getHoraFin().substring(0, 5) : horario.getHoraFin();
         holder.tvHorario.setText(inicio + " - " + fin + " (cada " + horario.getIntervaloMinutos() + " min)");
+
         holder.btnEliminar.setOnClickListener(onEliminarClickListener);
         holder.setHorario(horario);
     }

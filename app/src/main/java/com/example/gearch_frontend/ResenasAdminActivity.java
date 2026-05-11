@@ -19,6 +19,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla del admin para ver las resenas del taller
+// Muestra la puntuacion media y la lista completa de resenas
 public class ResenasAdminActivity extends AppCompatActivity {
 
     private TextView tvEstadisticas;
@@ -49,19 +51,19 @@ public class ResenasAdminActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Resena> resenas = response.body();
 
-                    // Calculamos la media de puntuación
+                    // Calculamos la media de puntuacion
                     if (resenas.isEmpty()) {
-                        tvEstadisticas.setText("Puntuación media: sin reseñas todavía");
+                        tvEstadisticas.setText("Puntuacion media: sin resenas todavia");
                     } else {
                         double suma = 0;
                         for (Resena r : resenas) {
                             suma += r.getPuntuacion();
                         }
                         double media = suma / resenas.size();
-                        tvEstadisticas.setText(String.format("Puntuación media: %.1f (%d reseñas)", media, resenas.size()));
+                        tvEstadisticas.setText(String.format("Puntuacion media: %.1f (%d resenas)", media, resenas.size()));
                     }
 
-                    // Reutilizamos el ResenaAdapter que ya existe
+                    // Reutilizamos el ResenaAdapter que ya existe en el proyecto
                     ResenaAdapter adapter = new ResenaAdapter(ResenasAdminActivity.this, resenas);
                     rvResenas.setAdapter(adapter);
                 }
@@ -69,7 +71,7 @@ public class ResenasAdminActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Resena>> call, Throwable t) {
-                Toast.makeText(ResenasAdminActivity.this, "Error al cargar las reseñas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResenasAdminActivity.this, "Error al cargar las resenas", Toast.LENGTH_SHORT).show();
             }
         });
     }

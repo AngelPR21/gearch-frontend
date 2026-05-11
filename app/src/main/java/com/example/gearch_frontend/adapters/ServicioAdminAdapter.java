@@ -15,9 +15,8 @@ import com.example.gearch_frontend.api.models.Servicio;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar la lista de servicios del taller en el panel admin.
- */
+// Adaptador para mostrar la lista de servicios del taller en el panel admin
+// Incluye un boton para eliminar cada servicio
 public class ServicioAdminAdapter extends RecyclerView.Adapter<ServicioAdminAdapter.ViewHolder> {
 
     private List<Servicio> servicios;

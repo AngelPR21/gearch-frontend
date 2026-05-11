@@ -23,6 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla que muestra los vehiculos del usuario
+// Permite anadir nuevos vehiculos y eliminar los existentes
 public class MisVehiculosActivity extends AppCompatActivity {
 
     private RecyclerView rvVehiculos;
@@ -31,6 +33,16 @@ public class MisVehiculosActivity extends AppCompatActivity {
     private ApiService api;
     private Long usuarioId;
 
+    // Launcher para abrir AnadirVehiculoActivity y recargar la lista al volver
+    // registerForActivityResult es el reemplazo moderno de startActivityForResult
+    ActivityResultLauncher<Intent> anadirVehiculoLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == RESULT_OK) {
+                    cargarVehiculos();
+                }
+            });
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +50,18 @@ public class MisVehiculosActivity extends AppCompatActivity {
 
         rvVehiculos = findViewById(R.id.rvVehiculos);
         btnAnadir = findViewById(R.id.btnAnadir);
+
+        // Botones de navegacion inferior
         ImageButton ibHome = findViewById(R.id.btnHome);
         ImageButton ibCitas = findViewById(R.id.btnCitas);
         ImageButton ibBuscar = findViewById(R.id.btnBuscar);
-        ImageButton ibVehiculos = findViewById(R.id.btnVehiculos);
         ImageButton ibUsuario = findViewById(R.id.btnUsuario);
 
         ibHome.setOnClickListener(v -> startActivity(new Intent(this, MainClienteActivity.class)));
+        ibCitas.setOnClickListener(v -> startActivity(new Intent(this, MisCitasActivity.class)));
         ibBuscar.setOnClickListener(v -> startActivity(new Intent(this, BuscarActivity.class)));
-        ibVehiculos.setOnClickListener(v -> startActivity(new Intent(this, MisVehiculosActivity.class)));
+        ibUsuario.setOnClickListener(v -> startActivity(new Intent(this, PerfilActivity.class)));
+
         api = ApiClient.getClient().create(ApiService.class);
 
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
@@ -54,28 +69,9 @@ public class MisVehiculosActivity extends AppCompatActivity {
 
         cargarVehiculos();
 
-        // Launcher para abrir AnadirVehiculoActivity y recargar la lista de vehiculos al volver
-        ActivityResultLauncher<Intent> anadirVehiculoLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        cargarVehiculos();
-                    }
-                });
-
         btnAnadir.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AnadirVehiculoActivity.class);
-            anadirVehiculoLauncher.launch(intent);
+            anadirVehiculoLauncher.launch(new Intent(this, AnadirVehiculoActivity.class));
         });
-    }
-
-    // Cuando vuelve de AnadirVehiculoActivity recargamos la lista
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            cargarVehiculos();
-        }
     }
 
     private void cargarVehiculos() {
@@ -84,7 +80,7 @@ public class MisVehiculosActivity extends AppCompatActivity {
             public void onResponse(Call<List<Vehiculo>> call, Response<List<Vehiculo>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     adapter = new VehiculoAdapter(MisVehiculosActivity.this, response.body(), v -> {
-                        // Buscamos el ViewHolder que contiene el botón pulsado
+                        // findContainingViewHolder busca el ViewHolder que contiene el boton pulsado
                         VehiculoAdapter.ViewHolder vh = (VehiculoAdapter.ViewHolder) rvVehiculos.findContainingViewHolder(v);
                         if (vh != null) {
                             eliminarVehiculo(vh.getVehiculo());
@@ -96,7 +92,7 @@ public class MisVehiculosActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                Toast.makeText(MisVehiculosActivity.this, "Error al cargar los vehículos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MisVehiculosActivity.this, "Error al cargar los vehiculos", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -106,16 +102,16 @@ public class MisVehiculosActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(MisVehiculosActivity.this, "Vehículo eliminado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MisVehiculosActivity.this, "Vehiculo eliminado", Toast.LENGTH_SHORT).show();
                     cargarVehiculos();
                 } else {
-                    Toast.makeText(MisVehiculosActivity.this, "Error al eliminar el vehículo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MisVehiculosActivity.this, "Error al eliminar el vehiculo", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(MisVehiculosActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MisVehiculosActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

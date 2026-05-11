@@ -17,6 +17,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla para escribir una resena sobre un taller
+// Recibe el tallerId desde DetalleTallerActivity
 public class EscribirResenaActivity extends AppCompatActivity {
 
     private RatingBar ratingBar;
@@ -37,7 +39,7 @@ public class EscribirResenaActivity extends AppCompatActivity {
 
         api = ApiClient.getClient().create(ApiService.class);
 
-        // Obtenemos el tallerId que nos pasó DetalleTallerActivity
+        // Recibimos el id del taller que nos paso DetalleTallerActivity
         tallerId = getIntent().getLongExtra("tallerId", -1);
 
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
@@ -50,9 +52,8 @@ public class EscribirResenaActivity extends AppCompatActivity {
         String comentario = etComentario.getText().toString().trim();
         int puntuacion = (int) ratingBar.getRating();
 
-        // Validamos que haya seleccionado al menos una estrella
         if (puntuacion == 0) {
-            Toast.makeText(this, "Selecciona una puntuación", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Selecciona una puntuacion", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -69,17 +70,17 @@ public class EscribirResenaActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Resena> call, Response<Resena> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(EscribirResenaActivity.this, "Reseña enviada correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EscribirResenaActivity.this, "Resena enviada correctamente", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(EscribirResenaActivity.this, "Error al enviar la reseña", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EscribirResenaActivity.this, "Error al enviar la resena", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Resena> call, Throwable t) {
-                Toast.makeText(EscribirResenaActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EscribirResenaActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

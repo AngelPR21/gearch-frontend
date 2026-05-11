@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -22,23 +23,28 @@ import com.example.gearch_frontend.api.models.Taller;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla principal del cliente
+// Muestra dos RecyclerViews: talleres recientes (horizontal) y talleres cercanos (vertical)
+// Contiene la barra de navegacion inferior con acceso a las demas pantallas
 public class MainClienteActivity extends AppCompatActivity {
 
     private RecyclerView rvRecientes, rvCercanos;
     private TallerAdapter adapterRecientes, adapterCercanos;
 
     // Cliente de Google para obtener la ubicacion del dispositivo
-    private FusedLocationProviderClient locationClient  ;
+    private FusedLocationProviderClient locationClient;
     private ApiService api;
 
     // Codigo identificador para el permiso de ubicacion
-    // Se usa en onRequestPermissionsResult para saber que permiso se esta pidiendo
+    // Se usa en onRequestPermissionsResult para saber que permiso se esta respondiendo
     private static final int PERMISO_UBICACION = 100;
 
     @Override
@@ -49,40 +55,35 @@ public class MainClienteActivity extends AppCompatActivity {
         rvRecientes = findViewById(R.id.rvRecientes);
         rvCercanos = findViewById(R.id.rvCercanos);
 
-        // Recyclerview de recientes horizontal
+        // RecyclerView de recientes horizontal
         rvRecientes.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         // RecyclerView de cercanos vertical
         rvCercanos.setLayoutManager(new LinearLayoutManager(this));
 
-        // Creamos la conexion con el backend
         api = ApiClient.getClient().create(ApiService.class);
-        // Creamos el cliente de ubicacion de Google
         locationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Botones de navegación inferior
+        // Botones de navegacion inferior
         ImageButton btnHome = findViewById(R.id.btnHome);
         ImageButton btnCitas = findViewById(R.id.btnCitas);
         ImageButton btnBuscar = findViewById(R.id.btnBuscar);
         ImageButton btnVehiculos = findViewById(R.id.btnVehiculos);
         ImageButton btnUsuario = findViewById(R.id.btnUsuario);
 
-        // Al pulsar cada boton abre la Activity correspondiente
         btnCitas.setOnClickListener(v -> startActivity(new Intent(this, MisCitasActivity.class)));
         btnBuscar.setOnClickListener(v -> startActivity(new Intent(this, BuscarActivity.class)));
         btnVehiculos.setOnClickListener(v -> startActivity(new Intent(this, MisVehiculosActivity.class)));
+        btnUsuario.setOnClickListener(v -> startActivity(new Intent(this, PerfilActivity.class)));
 
-        // Cargamos los datos al entrar a la pantalla
         cargarTalleresRecientes();
         pedirUbicacionYCargarCercanos();
     }
 
     // Carga los talleres en los que el usuario ha tenido citas anteriores
     private void cargarTalleresRecientes() {
-        // Obtenemos el id del usuario guardado en SharedPreferences al hacer login
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
         Long usuarioId = prefs.getLong("id", -1);
 
-        // Llamada al backend para obtener las citas del usuario
         api.getCitasUsuario(usuarioId).enqueue(new Callback<List<Cita>>() {
             @Override
             public void onResponse(Call<List<Cita>> call, Response<List<Cita>> response) {
@@ -97,12 +98,10 @@ public class MainClienteActivity extends AppCompatActivity {
                         }
                     }
 
-                    // Creamos el adapter con los talleres y el listener de click
                     adapterRecientes = new TallerAdapter(MainClienteActivity.this, talleresRecientes, v -> {
-                        // Al pulsar un taller buscamos el ViewHolder que contiene la vista pulsada
+                        // findContainingViewHolder busca el ViewHolder que contiene la vista pulsada
                         TallerAdapter.ViewHolder vh = (TallerAdapter.ViewHolder) rvRecientes.findContainingViewHolder(v);
                         if (vh != null) {
-                            // Abrimos el detalle del taller pasandole su id
                             Intent intent = new Intent(MainClienteActivity.this, DetalleTallerActivity.class);
                             intent.putExtra("tallerId", vh.getTaller().getId());
                             startActivity(intent);
@@ -123,11 +122,9 @@ public class MainClienteActivity extends AppCompatActivity {
     private void pedirUbicacionYCargarCercanos() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            // No tiene permiso, mostramos el dialogo al usuario para pedirlo
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISO_UBICACION);
         } else {
-            // Ya tiene permiso, obtenemos la ubicacion directamente
             obtenerUbicacionYCargar();
         }
     }
@@ -136,29 +133,25 @@ public class MainClienteActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISO_UBICACION && grantResults.length > 0 //si llama y es 0 peta
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) { //la posicion 1 del array de permisos tiene que tener el que hemos pedido
-            // El usuario acepto el permiso, obtenemos la ubicacion
+        if (requestCode == PERMISO_UBICACION && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             obtenerUbicacionYCargar();
         } else {
-            Toast.makeText(this, "Permiso de ubicación denegado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Permiso de ubicacion denegado", Toast.LENGTH_SHORT).show();
         }
     }
 
     // Obtiene la ultima ubicacion conocida del dispositivo
-    //NO funciona si usamos el emulador porque no tiene una ubicacion,
-    // es una maquina virtual y devuelve null por lo que tendriamos que llamar a cargar talleres cercanos con unas coord ya puestas
+    // En el emulador puede devolver null porque no tiene GPS real
     private void obtenerUbicacionYCargar() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {return;};
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
 
-        //Obtenemos la ubicacion real, se llama solo una vez cada vez que la abres
         locationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
-                //este addOnSuccesListener es el onResponse del retrofit pero en getCurrentLocation
                 .addOnSuccessListener(ubicacion -> {
                     if (ubicacion != null) {
                         cargarTalleresCercanos(ubicacion.getLatitude(), ubicacion.getLongitude());
                     } else {
-                        Toast.makeText(MainClienteActivity.this, "No se pudo obtener la ubicación", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainClienteActivity.this, "No se pudo obtener la ubicacion", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

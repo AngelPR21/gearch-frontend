@@ -1,6 +1,5 @@
 package com.example.gearch_frontend;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -15,7 +14,6 @@ import com.example.gearch_frontend.adapters.CitaAdminAdapter;
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Cita;
-import com.example.gearch_frontend.api.models.enums.EstadoCita;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,12 +22,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla del admin para gestionar las citas del taller
+// Permite filtrar por estado y cancelar o completar cada cita
 public class CitasAdminActivity extends AppCompatActivity {
 
     private Spinner spinnerEstado;
     private RecyclerView rvCitas;
     private ApiService api;
     private Long tallerId;
+
+    // Guardamos todas las citas para poder filtrar sin volver a llamar al backend
     private List<Cita> todasLasCitas = new ArrayList<>();
     private CitaAdminAdapter adapter;
 
@@ -51,7 +53,6 @@ public class CitasAdminActivity extends AppCompatActivity {
     }
 
     private void configurarSpinner() {
-        // Opciones de filtro
         List<String> opciones = new ArrayList<>();
         opciones.add("Todas");
         opciones.add("CONFIRMADA");
@@ -63,6 +64,7 @@ public class CitasAdminActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEstado.setAdapter(adapter);
 
+        // Al cambiar el filtro refrescamos la lista sin volver a llamar al backend
         spinnerEstado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
@@ -74,7 +76,7 @@ public class CitasAdminActivity extends AppCompatActivity {
         });
     }
 
-    // Filtra la lista según el estado seleccionado en el Spinner
+    // Filtra la lista local segun el estado seleccionado en el Spinner
     private void filtrarCitas(String filtro) {
         List<Cita> citasFiltradas = new ArrayList<>();
 
@@ -132,7 +134,7 @@ public class CitasAdminActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Cita> call, Throwable t) {
-                Toast.makeText(CitasAdminActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CitasAdminActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

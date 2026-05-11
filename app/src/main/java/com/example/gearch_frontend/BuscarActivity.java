@@ -21,6 +21,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla de busqueda de talleres por nombre
 public class BuscarActivity extends AppCompatActivity {
 
     private EditText etBuscar;
@@ -39,16 +40,16 @@ public class BuscarActivity extends AppCompatActivity {
 
         api = ApiClient.getClient().create(ApiService.class);
 
-        // Botones de navegación inferior
+        // Botones de navegacion inferior
         ImageButton ibHome = findViewById(R.id.btnHome);
         ImageButton ibCitas = findViewById(R.id.btnCitas);
-        ImageButton ibBuscar = findViewById(R.id.btnBuscar);
         ImageButton ibVehiculos = findViewById(R.id.btnVehiculos);
         ImageButton ibUsuario = findViewById(R.id.btnUsuario);
 
         ibHome.setOnClickListener(v -> startActivity(new Intent(this, MainClienteActivity.class)));
         ibCitas.setOnClickListener(v -> startActivity(new Intent(this, MisCitasActivity.class)));
         ibVehiculos.setOnClickListener(v -> startActivity(new Intent(this, MisVehiculosActivity.class)));
+        ibUsuario.setOnClickListener(v -> startActivity(new Intent(this, PerfilActivity.class)));
 
         btnBuscarTaller.setOnClickListener(v -> buscar());
     }
@@ -82,7 +83,7 @@ public class BuscarActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Taller>> call, Throwable t) {
-                Toast.makeText(BuscarActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BuscarActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

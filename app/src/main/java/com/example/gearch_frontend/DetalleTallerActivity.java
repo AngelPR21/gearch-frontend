@@ -26,6 +26,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla de detalle de un taller
+// Muestra los datos del taller, sus servicios y sus resenas
+// Permite navegar a ReservarActivity y EscribirResenaActivity
 public class DetalleTallerActivity extends AppCompatActivity {
 
     private TextView tvNombre, tvDireccion, tvTelefono, tvDescripcion;
@@ -39,7 +42,6 @@ public class DetalleTallerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_taller);
-
 
         tvNombre = findViewById(R.id.tvNombreTaller);
         tvDireccion = findViewById(R.id.tvDireccion);
@@ -56,7 +58,7 @@ public class DetalleTallerActivity extends AppCompatActivity {
 
         api = ApiClient.getClient().create(ApiService.class);
 
-        // Recibimos el id del taller que nos pasó MainClienteActivity
+        // Recibimos el id del taller que nos paso MainClienteActivity o BuscarActivity
         tallerId = getIntent().getLongExtra("tallerId", -1);
 
         cargarDatosTaller();
@@ -70,7 +72,7 @@ public class DetalleTallerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Al pulsar escribir reseña abrimos EscribirResenaActivity pasando el id del taller
+        // Al pulsar escribir resena abrimos EscribirResenaActivity pasando el id del taller
         btnEscribirResena.setOnClickListener(v -> {
             Intent intent = new Intent(this, EscribirResenaActivity.class);
             intent.putExtra("tallerId", tallerId);
@@ -78,7 +80,7 @@ public class DetalleTallerActivity extends AppCompatActivity {
         });
     }
 
-    // Carga los datos principales del taller
+    // Carga los datos principales del taller y muestra la foto si tiene
     private void cargarDatosTaller() {
         api.getTallerById(tallerId).enqueue(new Callback<Taller>() {
             @Override
@@ -125,7 +127,7 @@ public class DetalleTallerActivity extends AppCompatActivity {
         });
     }
 
-    // Carga las reseñas del taller
+    // Carga las resenas del taller
     private void cargarResenas() {
         api.getResenasByTaller(tallerId).enqueue(new Callback<List<Resena>>() {
             @Override
@@ -138,7 +140,7 @@ public class DetalleTallerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Resena>> call, Throwable t) {
-                Toast.makeText(DetalleTallerActivity.this, "Error al cargar reseñas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetalleTallerActivity.this, "Error al cargar resenas", Toast.LENGTH_SHORT).show();
             }
         });
     }

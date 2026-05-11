@@ -16,6 +16,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla para anadir un nuevo servicio al taller del admin
+// Al guardar correctamente devuelve RESULT_OK a ServiciosAdminActivity para que recargue la lista
 public class AnadirServicioActivity extends AppCompatActivity {
 
     private EditText etNombre, etDescripcion, etPrecio;
@@ -60,17 +62,17 @@ public class AnadirServicioActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Servicio> call, Response<Servicio> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(AnadirServicioActivity.this, "Servicio añadido correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnadirServicioActivity.this, "Servicio anadido correctamente", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(AnadirServicioActivity.this, "Error al añadir el servicio", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnadirServicioActivity.this, "Error al anadir el servicio", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Servicio> call, Throwable t) {
-                Toast.makeText(AnadirServicioActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnadirServicioActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

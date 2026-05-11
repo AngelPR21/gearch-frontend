@@ -19,6 +19,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla para anadir un nuevo dia al horario del taller
+// El admin selecciona el dia de la semana y las horas de apertura y cierre
+// Al guardar correctamente devuelve RESULT_OK a HorarioAdminActivity para que recargue
 public class AnadirHorarioActivity extends AppCompatActivity {
 
     private Spinner spinnerDia;
@@ -26,7 +29,8 @@ public class AnadirHorarioActivity extends AppCompatActivity {
     private ApiService api;
     private Long adminId;
 
-    // Guardamos las horas seleccionadas
+    // Arrays para guardar las horas seleccionadas en los TimePicker
+    // Inicializamos con valores por defecto: 09:00 y 18:00
     private int[] horaInicio = {9, 0};
     private int[] horaFin = {18, 0};
 
@@ -45,20 +49,20 @@ public class AnadirHorarioActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
         adminId = prefs.getLong("id", -1);
 
-        // Rellenamos el Spinner con los días de la semana
+        // Rellenamos el Spinner con los dias de la semana del enum DiaSemana
         ArrayAdapter<DiaSemana> adapterDias = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, DiaSemana.values());
         adapterDias.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDia.setAdapter(adapterDias);
 
-        // Al pulsar el botón de hora inicio abre un TimePicker
+        // Al pulsar el boton de hora inicio abre un TimePickerDialog
         btnHoraInicio.setOnClickListener(v -> new TimePickerDialog(this, (view, h, m) -> {
             horaInicio[0] = h;
             horaInicio[1] = m;
             btnHoraInicio.setText(String.format("%02d:%02d", h, m));
         }, horaInicio[0], horaInicio[1], true).show());
 
-        // Al pulsar el botón de hora fin abre un TimePicker
+        // Al pulsar el boton de hora fin abre un TimePickerDialog
         btnHoraFin.setOnClickListener(v -> new TimePickerDialog(this, (view, h, m) -> {
             horaFin[0] = h;
             horaFin[1] = m;
@@ -73,25 +77,27 @@ public class AnadirHorarioActivity extends AppCompatActivity {
 
         DisponibilidadTaller disponibilidad = new DisponibilidadTaller();
         disponibilidad.setDiaSemana(dia);
+        // El backend espera el formato "HH:mm:ss"
         disponibilidad.setHoraInicio(String.format("%02d:%02d:00", horaInicio[0], horaInicio[1]));
         disponibilidad.setHoraFin(String.format("%02d:%02d:00", horaFin[0], horaFin[1]));
+        // El intervalo es fijo a 30 minutos
         disponibilidad.setIntervaloMinutos(30);
 
         api.crearHorario(adminId, disponibilidad).enqueue(new Callback<DisponibilidadTaller>() {
             @Override
             public void onResponse(Call<DisponibilidadTaller> call, Response<DisponibilidadTaller> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(AnadirHorarioActivity.this, "Día añadido correctamente", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnadirHorarioActivity.this, "Dia anadido correctamente", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish();
                 } else {
-                    Toast.makeText(AnadirHorarioActivity.this, "Error al añadir el día", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnadirHorarioActivity.this, "Error al anadir el dia", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<DisponibilidadTaller> call, Throwable t) {
-                Toast.makeText(AnadirHorarioActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnadirHorarioActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

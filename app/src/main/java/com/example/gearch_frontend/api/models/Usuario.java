@@ -2,6 +2,8 @@ package com.example.gearch_frontend.api.models;
 
 import com.example.gearch_frontend.api.models.enums.RolUsuario;
 
+// Modelo que representa un usuario de la aplicacion
+// Puede ser CLIENTE o ADMIN_TALLER
 public class Usuario {
     private Long id;
     private String nombre;
@@ -10,6 +12,9 @@ public class Usuario {
     private String password;
     private String telefono;
     private RolUsuario rol;
+
+    // Solo existe si el usuario es ADMIN_TALLER
+    // El backend lo devuelve en la respuesta del login
     private Long tallerAdministradoId;
 
     public Long getId() { return id; }

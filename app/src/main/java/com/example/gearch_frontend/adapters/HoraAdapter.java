@@ -8,17 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gearch_frontend.R;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar las horas disponibles en un RecyclerView en grid.
- * Al pulsar una hora la marca en azul y guarda la selección.
- */
+// Adaptador para mostrar las horas disponibles en un RecyclerView en grid
+// Al pulsar una hora la marca en azul y guarda la seleccion
 public class HoraAdapter extends RecyclerView.Adapter<HoraAdapter.ViewHolder> {
 
     private List<String> horas;
@@ -49,16 +46,17 @@ public class HoraAdapter extends RecyclerView.Adapter<HoraAdapter.ViewHolder> {
 
         // Marcamos la hora seleccionada con color diferente
         if (position == posicionSeleccionada) {
-            holder.linearLayout.setBackgroundColor(0xFF1976D2);
-            holder.tvHora.setTextColor(0xFFFFFFFF);
+            holder.linearLayout.setBackgroundColor(0xFF1976D2); // azul seleccionado
+            holder.tvHora.setTextColor(0xFFFFFFFF); // texto blanco
         } else {
-            holder.linearLayout.setBackgroundColor(0xFFFFFFFF);
-            holder.tvHora.setTextColor(0xFF000000);
+            holder.linearLayout.setBackgroundColor(0xFFFFFFFF); // blanco normal
+            holder.tvHora.setTextColor(0xFF000000); // texto negro
         }
 
         holder.itemView.setOnClickListener(v -> {
             int anteriorSeleccionada = posicionSeleccionada;
-            posicionSeleccionada = holder.getAdapterPosition();
+            // getBindingAdapterPosition en lugar de getAdapterPosition (deprecated)
+            posicionSeleccionada = holder.getBindingAdapterPosition();
             // Solo refrescamos las dos posiciones afectadas para no redibujar todo
             notifyItemChanged(anteriorSeleccionada);
             notifyItemChanged(posicionSeleccionada);
@@ -70,7 +68,8 @@ public class HoraAdapter extends RecyclerView.Adapter<HoraAdapter.ViewHolder> {
         return horas != null ? horas.size() : 0;
     }
 
-    // Reemplaza la lista de horas y resetea la selección
+    // Reemplaza la lista de horas y resetea la seleccion
+    // Se llama cada vez que el usuario cambia de dia en el calendario
     public void actualizarHoras(List<String> nuevasHoras) {
         this.horas = nuevasHoras;
         posicionSeleccionada = -1;
@@ -90,7 +89,7 @@ public class HoraAdapter extends RecyclerView.Adapter<HoraAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvHora = itemView.findViewById(R.id.tvHora);
-            linearLayout = (LinearLayout) itemView;
+            linearLayout = (LinearLayout) itemView; // el root del layout es el LinearLayout
         }
     }
 }

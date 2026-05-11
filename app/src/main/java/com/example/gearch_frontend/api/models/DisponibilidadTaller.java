@@ -2,9 +2,13 @@ package com.example.gearch_frontend.api.models;
 
 import com.example.gearch_frontend.api.models.enums.DiaSemana;
 
+// Modelo que representa el horario de un taller para un dia de la semana
+// Se usa en HorarioAdminActivity y AnadirHorarioActivity
 public class DisponibilidadTaller {
     private Long id;
     private DiaSemana diaSemana;
+
+    // El backend devuelve las horas como String "HH:mm:ss"
     private String horaInicio;
     private String horaFin;
     private Integer intervaloMinutos;

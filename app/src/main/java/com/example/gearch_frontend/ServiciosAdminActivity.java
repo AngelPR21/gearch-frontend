@@ -23,6 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla del admin para gestionar los servicios del taller
+// Permite ver, anadir y eliminar servicios
 public class ServiciosAdminActivity extends AppCompatActivity {
 
     private RecyclerView rvServicios;
@@ -31,6 +33,7 @@ public class ServiciosAdminActivity extends AppCompatActivity {
     private Long tallerId;
     private Long adminId;
 
+    // Launcher para abrir AnadirServicioActivity y recargar la lista al volver
     ActivityResultLauncher<Intent> anadirServicioLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -83,10 +86,11 @@ public class ServiciosAdminActivity extends AppCompatActivity {
         });
     }
 
+    // Muestra un dialogo de confirmacion antes de eliminar
     private void confirmarEliminar(Servicio servicio) {
         new AlertDialog.Builder(this)
                 .setTitle("Eliminar servicio")
-                .setMessage("¿Estás seguro de que quieres eliminar " + servicio.getNombre() + "?")
+                .setMessage("¿Estas seguro de que quieres eliminar " + servicio.getNombre() + "?")
                 .setPositiveButton("Eliminar", (dialog, which) -> eliminarServicio(servicio))
                 .setNegativeButton("Cancelar", null)
                 .show();
@@ -106,7 +110,7 @@ public class ServiciosAdminActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(ServiciosAdminActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ServiciosAdminActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -23,9 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/*
- * Adaptador para mostrar la lista de citas del usuario en un RecyclerView.
- */
+// Adaptador para mostrar la lista de citas del usuario en un RecyclerView
 public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
     private List<Cita> citas;
@@ -53,6 +51,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
         holder.tvFechaHora.setText(cita.getFechaHora());
         holder.tvEstado.setText("Estado: " + cita.getEstado().toString());
+
         if (cita.getTaller() != null) {
             holder.tvTaller.setText(cita.getTaller().getNombre());
         }
@@ -67,7 +66,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             holder.tvNotas.setVisibility(View.GONE);
         }
 
-        // Solo mostramos el botón si la cita no está ya cancelada o completada
+        // Solo mostramos el boton cancelar si la cita no esta ya cancelada o completada
         if (cita.getEstado() == EstadoCita.CANCELADA || cita.getEstado() == EstadoCita.COMPLETADA) {
             holder.btnCancelar.setVisibility(View.GONE);
         } else {
@@ -78,6 +77,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
                     public void onResponse(Call<Cita> call, Response<Cita> response) {
                         if (response.isSuccessful()) {
                             cita.setEstado(EstadoCita.CANCELADA);
+                            // getBindingAdapterPosition en lugar de getAdapterPosition (deprecated)
                             int pos = holder.getBindingAdapterPosition();
                             if (pos != RecyclerView.NO_ID) {
                                 notifyItemChanged(pos);
@@ -90,7 +90,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
                     @Override
                     public void onFailure(Call<Cita> call, Throwable t) {
-                        Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error de conexion", Toast.LENGTH_SHORT).show();
                     }
                 });
             });

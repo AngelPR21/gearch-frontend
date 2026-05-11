@@ -1,9 +1,12 @@
 package com.example.gearch_frontend.api.models;
 
+// Modelo que representa una resena de un cliente sobre un taller
 public class Resena {
     private Long id;
     private String comentario;
     private Integer puntuacion;
+
+    // La fecha viene como String desde el backend porque Gson no convierte LocalDateTime automaticamente
     private String fecha;
 
     public Long getId() { return id; }

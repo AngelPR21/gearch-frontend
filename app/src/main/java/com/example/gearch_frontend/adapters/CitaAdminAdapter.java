@@ -16,9 +16,8 @@ import com.example.gearch_frontend.api.models.enums.EstadoCita;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar la lista de citas del taller en el panel admin.
- */
+// Adaptador para mostrar la lista de citas del taller en el panel admin
+// Incluye botones para cancelar o completar cada cita
 public class CitaAdminAdapter extends RecyclerView.Adapter<CitaAdminAdapter.ViewHolder> {
 
     private List<Cita> citas;
@@ -58,6 +57,7 @@ public class CitaAdminAdapter extends RecyclerView.Adapter<CitaAdminAdapter.View
             holder.tvServicio.setText(cita.getServicio().getNombre());
         }
 
+        // El vehiculo es opcional, si no tiene se oculta el TextView
         if (cita.getVehiculo() != null) {
             holder.tvVehiculo.setText(cita.getVehiculo().getMarca() + " " + cita.getVehiculo().getModelo() + " - " + cita.getVehiculo().getMatricula());
         } else {
@@ -72,7 +72,7 @@ public class CitaAdminAdapter extends RecyclerView.Adapter<CitaAdminAdapter.View
 
         holder.tvEstado.setText("Estado: " + cita.getEstado().toString());
 
-        // Solo mostramos los botones si la cita está confirmada
+        // Solo mostramos los botones si la cita esta confirmada
         if (cita.getEstado() == EstadoCita.CANCELADA || cita.getEstado() == EstadoCita.COMPLETADA) {
             holder.btnCancelar.setVisibility(View.GONE);
             holder.btnCompletar.setVisibility(View.GONE);

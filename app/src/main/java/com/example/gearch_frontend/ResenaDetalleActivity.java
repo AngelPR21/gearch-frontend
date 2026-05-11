@@ -5,6 +5,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+// Pantalla de detalle de una resena
+// Muestra la puntuacion, fecha y comentario completo
+// Se abre al pulsar una resena en DetalleTallerActivity o ResenasAdminActivity
 public class ResenaDetalleActivity extends AppCompatActivity {
 
     @Override
@@ -16,7 +19,7 @@ public class ResenaDetalleActivity extends AppCompatActivity {
         TextView tvFecha = findViewById(R.id.tvFecha);
         TextView tvComentario = findViewById(R.id.tvComentario);
 
-        // Recibimos los datos de la reseña
+        // Recibimos los datos de la resena pasados desde ResenaAdapter
         tvPuntuacion.setText("⭐ " + getIntent().getIntExtra("puntuacion", 0) + "/5");
         tvFecha.setText(getIntent().getStringExtra("fecha"));
         tvComentario.setText(getIntent().getStringExtra("comentario"));

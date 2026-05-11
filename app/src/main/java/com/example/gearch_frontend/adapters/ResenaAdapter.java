@@ -10,16 +10,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.gearch_frontend.R;
 import com.example.gearch_frontend.ResenaDetalleActivity;
 import com.example.gearch_frontend.api.models.Resena;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar una lista de reseñas en un RecyclerView.
- */
+// Adaptador para mostrar una lista de resenas en un RecyclerView
+// Al pulsar una resena abre ResenaDetalleActivity con el detalle completo
 public class ResenaAdapter extends RecyclerView.Adapter<ResenaAdapter.ViewHolder> {
 
     private List<Resena> resenas;
@@ -45,6 +43,8 @@ public class ResenaAdapter extends RecyclerView.Adapter<ResenaAdapter.ViewHolder
         holder.tvPuntuacion.setText("⭐ " + resena.getPuntuacion() + "/5");
         holder.tvComentario.setText(resena.getComentario());
         holder.tvFecha.setText(resena.getFecha());
+
+        // Al pulsar la resena abrimos el detalle pasando los datos por Intent
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ResenaDetalleActivity.class);
             intent.putExtra("puntuacion", resena.getPuntuacion());
@@ -69,6 +69,5 @@ public class ResenaAdapter extends RecyclerView.Adapter<ResenaAdapter.ViewHolder
             tvComentario = itemView.findViewById(R.id.tvComentario);
             tvFecha = itemView.findViewById(R.id.tvFecha);
         }
-
     }
 }

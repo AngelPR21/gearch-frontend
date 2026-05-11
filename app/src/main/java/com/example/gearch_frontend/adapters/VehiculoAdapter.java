@@ -15,9 +15,8 @@ import com.example.gearch_frontend.api.models.Vehiculo;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar la lista de vehículos del usuario en un RecyclerView.
- */
+// Adaptador para mostrar la lista de vehiculos del usuario en un RecyclerView
+// Incluye un boton para eliminar cada vehiculo
 public class VehiculoAdapter extends RecyclerView.Adapter<VehiculoAdapter.ViewHolder> {
 
     private List<Vehiculo> vehiculos;

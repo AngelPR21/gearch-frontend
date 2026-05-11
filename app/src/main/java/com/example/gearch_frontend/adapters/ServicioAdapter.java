@@ -14,9 +14,8 @@ import com.example.gearch_frontend.api.models.Servicio;
 
 import java.util.List;
 
-/*
- * Adaptador para mostrar una lista de servicios en un RecyclerView.
- */
+// Adaptador para mostrar una lista de servicios en un RecyclerView
+// Se usa en DetalleTallerActivity para mostrar los servicios del taller
 public class ServicioAdapter extends RecyclerView.Adapter<ServicioAdapter.ViewHolder> {
 
     private List<Servicio> servicios;
@@ -59,6 +58,5 @@ public class ServicioAdapter extends RecyclerView.Adapter<ServicioAdapter.ViewHo
             tvDescripcion = itemView.findViewById(R.id.tvDescripcionServicio);
             tvPrecio = itemView.findViewById(R.id.tvPrecioServicio);
         }
-
     }
 }

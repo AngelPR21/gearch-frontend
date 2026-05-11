@@ -22,6 +22,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla de inicio de sesion
+// Redirige a MainClienteActivity o MainAdminActivity segun el rol del usuario
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
@@ -42,9 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(v -> login());
 
         // Al pulsar el texto de registro abre RegisterActivity
-        tvRegistro.setOnClickListener(v -> {
-            startActivity(new Intent(this, RegisterActivity.class));
-        });
+        tvRegistro.setOnClickListener(v -> startActivity(new Intent(this, RegisterActivity.class)));
     }
 
     private void login() {
@@ -67,18 +67,21 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     Usuario usuario = response.body();
 
-                    // Guardamos los datos en SharedPreferences que es basicamente como Localstorage de javascript
-                    //nos permite guardar cosas simples en un fichero xml interno
+                    // Guardamos los datos de sesion en SharedPreferences
+                    // SharedPreferences es como el LocalStorage de JavaScript, guarda datos simples en un fichero XML interno
                     SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putLong("id", usuario.getId());
                     editor.putString("rol", usuario.getRol().name());
+
+                    // Si es admin guardamos el id del taller con la clave "tallerId"
+                    // Esta clave se usa en MainAdminActivity, CitasAdminActivity y demas pantallas admin
                     if (usuario.getTallerAdministradoId() != null) {
-                        editor.putLong("tallerAdministradoId", usuario.getTallerAdministradoId());
+                        editor.putLong("tallerId", usuario.getTallerAdministradoId());
                     }
                     editor.apply();
 
-                    // Redirigir según el rol
+                    // Redirigimos segun el rol del usuario
                     if (usuario.getRol() == RolUsuario.ADMIN_TALLER) {
                         startActivity(new Intent(LoginActivity.this, MainAdminActivity.class));
                     } else {
@@ -86,13 +89,13 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Email o contrasena incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Error de conexión con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Error de conexion con el servidor", Toast.LENGTH_SHORT).show();
             }
         });
     }

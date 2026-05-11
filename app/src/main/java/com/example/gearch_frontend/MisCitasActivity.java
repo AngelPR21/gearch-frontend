@@ -20,6 +20,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla que muestra todas las citas del usuario
+// Permite cancelar citas pendientes o confirmadas
 public class MisCitasActivity extends AppCompatActivity {
 
     private RecyclerView rvCitas;
@@ -31,8 +33,9 @@ public class MisCitasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mis_citas);
 
         rvCitas = findViewById(R.id.rvCitas);
+
+        // Botones de navegacion inferior
         ImageButton ibHome = findViewById(R.id.btnHome);
-        ImageButton ibCitas = findViewById(R.id.btnCitas);
         ImageButton ibBuscar = findViewById(R.id.btnBuscar);
         ImageButton ibVehiculos = findViewById(R.id.btnVehiculos);
         ImageButton ibUsuario = findViewById(R.id.btnUsuario);
@@ -40,15 +43,14 @@ public class MisCitasActivity extends AppCompatActivity {
         ibHome.setOnClickListener(v -> startActivity(new Intent(this, MainClienteActivity.class)));
         ibBuscar.setOnClickListener(v -> startActivity(new Intent(this, BuscarActivity.class)));
         ibVehiculos.setOnClickListener(v -> startActivity(new Intent(this, MisVehiculosActivity.class)));
+        ibUsuario.setOnClickListener(v -> startActivity(new Intent(this, PerfilActivity.class)));
 
         api = ApiClient.getClient().create(ApiService.class);
 
-        // Obtenemos el id del usuario guardado en SharedPreferences al hacer login
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
         Long usuarioId = prefs.getLong("id", -1);
 
         cargarCitas(usuarioId);
-
     }
 
     // Carga las citas del usuario y las muestra en el RecyclerView

@@ -1,10 +1,13 @@
 package com.example.gearch_frontend.api.models;
 
+// Modelo que representa un vehiculo asociado a un usuario
 public class Vehiculo {
     private Long id;
     private String marca;
     private String modelo;
     private String matricula;
+
+    // Campos opcionales
     private Integer anio;
     private String color;
     private String combustible;

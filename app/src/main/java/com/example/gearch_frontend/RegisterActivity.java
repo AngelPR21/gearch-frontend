@@ -1,5 +1,7 @@
 package com.example.gearch_frontend;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,11 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.location.Geocoder;
-import android.location.Address;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,13 +23,13 @@ import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Taller;
 import com.example.gearch_frontend.api.models.Usuario;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Pantalla de registro para nuevos usuarios
+// Permite registrarse como cliente o como propietario de taller
+// Si se elige propietario se muestran campos adicionales para el taller
 public class RegisterActivity extends AppCompatActivity {
 
     private RadioGroup rgTipoUsuario;
@@ -50,16 +52,14 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etTelefono = findViewById(R.id.etTelefono);
-
         etNombreTaller = findViewById(R.id.etNombreTaller);
         etDireccion = findViewById(R.id.etDireccion);
         etTelefonoTaller = findViewById(R.id.etTelefonoTaller);
         etDescripcion = findViewById(R.id.etDescripcion);
-
         btnRegistrar = findViewById(R.id.btnRegistrar);
         tvLogin = findViewById(R.id.tvLogin);
 
-        // Mostrar u ocultar los campos del taller según el radio button seleccionado
+        // Mostramos u ocultamos los campos del taller segun el radio button seleccionado
         rgTipoUsuario.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rbPropietario) {
                 layoutTaller.setVisibility(View.VISIBLE);
@@ -69,6 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         btnRegistrar.setOnClickListener(v -> registrar());
+
+        // Al pulsar el texto de login volvemos atras
         tvLogin.setOnClickListener(v -> finish());
     }
 
@@ -84,7 +86,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Construir el usuario
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
@@ -102,21 +103,20 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void registrarCliente(ApiService api, Usuario usuario) {
-
         api.registrarCliente(usuario).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "Registro correcto, inicia sesión", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Registro correcto, inicia sesion", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Error al registrar, ese email ya está en uso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error al registrar, ese email ya esta en uso", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Error de conexión con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Error de conexion con el servidor", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -132,47 +132,45 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Construir el taller
         Taller taller = new Taller();
         taller.setNombre(nombreTaller);
         taller.setDireccion(direccion);
         taller.setTelefono(telefonoTaller);
         taller.setDescripcion(descripcion);
 
-        // Convertir dirección a coordenadas
-        try{
-            Geocoder geocoder = new Geocoder(RegisterActivity.this); //Esto es simplemente para que pase el nombre de la direccion a coordenadas( geocodificacion)
-            List<Address> direcciones = geocoder.getFromLocationName(direccion, 1);//el 1 es para que devuelva 1 coincidencia de esa direccion ya que pueden haber varias
+        // Geocoder convierte la direccion escrita por el usuario en coordenadas (latitud y longitud)
+        // Si falla se guarda el taller sin coordenadas, no aparecer en cercanos pero si en buscar
+        try {
+            Geocoder geocoder = new Geocoder(RegisterActivity.this);
+            // El 1 indica que solo queremos 1 coincidencia de la direccion
+            List<Address> direcciones = geocoder.getFromLocationName(direccion, 1);
             if (direcciones != null && !direcciones.isEmpty()) {
                 taller.setLatitud(direcciones.get(0).getLatitude());
                 taller.setLongitud(direcciones.get(0).getLongitude());
             }
-        }catch(IOException e){
-            //Si falla se puede añadir a la bbdd como null, no aparecera en cercanos pero se puede buscar igual
+        } catch (IOException e) {
             Toast.makeText(RegisterActivity.this, "No se pudieron obtener las coordenadas", Toast.LENGTH_SHORT).show();
-
         }
 
-
-        // El backend espera el record con el usuario y taller
+        // El backend espera un objeto con "usuario" y "taller" anidados
         Map<String, Object> request = new HashMap<>();
         request.put("usuario", usuario);
         request.put("taller", taller);
 
-        api.registrarAdminTaller(request).enqueue(new Callback<Usuario>() {//callback espera recibir un objeto usuario cuando el servidor responda
+        api.registrarAdminTaller(request).enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "Registro correcto, inicia sesión", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Registro correcto, inicia sesion", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Error al registrar, ese email ya está en uso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error al registrar, ese email ya esta en uso", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Error de conexión con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Error de conexion con el servidor", Toast.LENGTH_SHORT).show();
             }
         });
     }

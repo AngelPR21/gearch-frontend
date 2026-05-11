@@ -2,16 +2,18 @@ package com.example.gearch_frontend.api.models;
 
 import com.example.gearch_frontend.api.models.enums.EstadoCita;
 
+// Modelo que representa una cita en el frontend
+// Debe tener los mismos campos que devuelve el backend en el JSON
 public class Cita {
     private Long id;
     private Servicio servicio;
 
-    //No se puede usar LocalDateTime porque Gson no lo convierte automatico, tocara hacerlo manual
+    // No se puede usar LocalDateTime porque Gson no lo convierte automaticamente
+    // Se usa String con formato "yyyy-MM-ddTHH:mm:ss" que el backend deserializa como LocalDateTime
     private String fechaHora;
     private EstadoCita estado;
     private String notas;
     private Taller taller;
-
     private Usuario usuario;
     private Vehiculo vehiculo;
 
@@ -34,7 +36,6 @@ public class Cita {
     public void setNotas(String notas) { this.notas = notas; }
 
     public Taller getTaller() { return taller; }
-
     public void setTaller(Taller taller) { this.taller = taller; }
 
     public Servicio getServicio() { return servicio; }

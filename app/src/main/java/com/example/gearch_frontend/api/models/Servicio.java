@@ -1,12 +1,11 @@
 package com.example.gearch_frontend.api.models;
 
+// Modelo que representa un servicio ofrecido por un taller
 public class Servicio {
     private Long id;
     private String nombre;
     private String descripcion;
     private Double precio;
-
-
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -19,6 +18,4 @@ public class Servicio {
 
     public Double getPrecio() { return precio; }
     public void setPrecio(Double precio) { this.precio = precio; }
-
-
 }
