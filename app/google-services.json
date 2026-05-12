@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "826758175921",
+    "project_id": "gearch-cfc44",
+    "storage_bucket": "gearch-cfc44.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826758175921:android:ff78f66341134846e75690",
+        "android_client_info": {
+          "package_name": "com.example.gearch_frontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQO3LyB3wGCMi0OTv8aiZ3znf4otYKoMk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
