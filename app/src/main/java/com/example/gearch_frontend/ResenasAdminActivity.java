@@ -2,6 +2,7 @@ package com.example.gearch_frontend;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,8 +43,16 @@ public class ResenasAdminActivity extends AppCompatActivity {
         tallerId = prefs.getLong("tallerId", -1);
 
         cargarResenas();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void cargarResenas() {
         api.getResenasByTaller(tallerId).enqueue(new Callback<List<Resena>>() {
             @Override

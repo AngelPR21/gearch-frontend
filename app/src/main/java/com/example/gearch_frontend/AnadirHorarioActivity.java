@@ -3,6 +3,7 @@ package com.example.gearch_frontend;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -70,8 +71,16 @@ public class AnadirHorarioActivity extends AppCompatActivity {
         }, horaFin[0], horaFin[1], true).show());
 
         btnGuardar.setOnClickListener(v -> guardarHorario());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void guardarHorario() {
         DiaSemana dia = (DiaSemana) spinnerDia.getSelectedItem();
 

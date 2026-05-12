@@ -3,6 +3,7 @@ package com.example.gearch_frontend;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -49,8 +50,16 @@ public class PerfilAdminActivity extends AppCompatActivity {
 
         btnGuardar.setOnClickListener(v -> guardarCambios());
         btnEliminarCuenta.setOnClickListener(v -> confirmarEliminarCuenta());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     // Carga los datos del admin y los muestra en los EditText
     private void cargarPerfil() {
         api.getUsuario(adminId).enqueue(new Callback<Usuario>() {

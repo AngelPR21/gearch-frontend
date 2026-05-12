@@ -125,7 +125,16 @@ public class PerfilActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
         prefs.edit().clear().apply();
         Intent intent = new Intent(this, LoginActivity.class);
-        // Limpiamos el back stack para que no pueda volver atras con el boton de retroceso
+        //
+        /*
+        Limpiamos el back stack para que no pueda volver atras con el boton de retroceso
+
+        Los dos juntos consiguen que al cerrar sesión el usuario no pueda pulsar el botón de atrás
+        del móvil y volver a una pantalla de la app sin estar logueado.
+        Sin estos flags podría volver atrás y seguir viendo pantallas aunque ya haya cerrado sesión.
+
+        Usa el | (OR) porque es la forma de combinar ambos
+         */
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

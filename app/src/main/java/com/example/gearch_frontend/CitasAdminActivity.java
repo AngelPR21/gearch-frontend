@@ -2,6 +2,7 @@ package com.example.gearch_frontend;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -50,8 +51,16 @@ public class CitasAdminActivity extends AppCompatActivity {
 
         configurarSpinner();
         cargarCitas();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void configurarSpinner() {
         List<String> opciones = new ArrayList<>();
         opciones.add("Todas");

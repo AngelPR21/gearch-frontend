@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -73,8 +74,17 @@ public class EditarTallerActivity extends AppCompatActivity {
         btnCambiarFoto.setOnClickListener(v -> seleccionarFotoLauncher.launch("image/*"));
 
         btnGuardar.setOnClickListener(v -> guardarCambios());
-    }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     // Carga los datos actuales del taller y los muestra en los EditText
     private void cargarTaller() {
         api.getMiTaller(adminId).enqueue(new Callback<Taller>() {

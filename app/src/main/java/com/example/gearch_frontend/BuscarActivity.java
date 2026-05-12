@@ -10,7 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gearch_frontend.adapters.TallerAdapter;
+import com.example.gearch_frontend.adapters.TallerRecienteAdapter;
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Taller;
@@ -69,8 +69,8 @@ public class BuscarActivity extends AppCompatActivity {
                     if (response.body().isEmpty()) {
                         Toast.makeText(BuscarActivity.this, "No se encontraron talleres", Toast.LENGTH_SHORT).show();
                     }
-                    TallerAdapter adapter = new TallerAdapter(BuscarActivity.this, response.body(), v -> {
-                        TallerAdapter.ViewHolder vh = (TallerAdapter.ViewHolder) rvResultados.findContainingViewHolder(v);
+                    TallerRecienteAdapter adapter = new TallerRecienteAdapter(BuscarActivity.this, response.body(), v -> {
+                        TallerRecienteAdapter.ViewHolder vh = (TallerRecienteAdapter.ViewHolder) rvResultados.findContainingViewHolder(v);
                         if (vh != null) {
                             Intent intent = new Intent(BuscarActivity.this, DetalleTallerActivity.class);
                             intent.putExtra("tallerId", vh.getTaller().getId());

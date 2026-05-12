@@ -2,6 +2,7 @@ package com.example.gearch_frontend;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -94,8 +95,17 @@ public class ReservarActivity extends AppCompatActivity {
         });
 
         btnConfirmar.setOnClickListener(v -> confirmarReserva());
-    }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     // Carga los servicios del taller y rellena el Spinner
     private void cargarServicios() {
         api.getServiciosByTaller(tallerId).enqueue(new Callback<List<Servicio>>() {

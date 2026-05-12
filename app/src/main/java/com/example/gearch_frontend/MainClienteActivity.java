@@ -15,7 +15,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.gearch_frontend.adapters.TallerAdapter;
+import com.example.gearch_frontend.adapters.TallerCercanoAdapter;
+import com.example.gearch_frontend.adapters.TallerRecienteAdapter;
 import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Cita;
@@ -37,7 +38,8 @@ import retrofit2.Response;
 public class MainClienteActivity extends AppCompatActivity {
 
     private RecyclerView rvRecientes, rvCercanos;
-    private TallerAdapter adapterRecientes, adapterCercanos;
+    private TallerRecienteAdapter adapterRecientes;
+    private TallerCercanoAdapter adapterCercanos;
 
     // Cliente de Google para obtener la ubicacion del dispositivo
     private FusedLocationProviderClient locationClient;
@@ -98,9 +100,8 @@ public class MainClienteActivity extends AppCompatActivity {
                         }
                     }
 
-                    adapterRecientes = new TallerAdapter(MainClienteActivity.this, talleresRecientes, v -> {
-                        // findContainingViewHolder busca el ViewHolder que contiene la vista pulsada
-                        TallerAdapter.ViewHolder vh = (TallerAdapter.ViewHolder) rvRecientes.findContainingViewHolder(v);
+                    adapterRecientes = new TallerRecienteAdapter(MainClienteActivity.this, talleresRecientes, v -> {
+                        TallerRecienteAdapter.ViewHolder vh = (TallerRecienteAdapter.ViewHolder) rvRecientes.findContainingViewHolder(v);
                         if (vh != null) {
                             Intent intent = new Intent(MainClienteActivity.this, DetalleTallerActivity.class);
                             intent.putExtra("tallerId", vh.getTaller().getId());
@@ -162,8 +163,8 @@ public class MainClienteActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Taller>> call, Response<List<Taller>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    adapterCercanos = new TallerAdapter(MainClienteActivity.this, response.body(), v -> {
-                        TallerAdapter.ViewHolder vh = (TallerAdapter.ViewHolder) rvCercanos.findContainingViewHolder(v);
+                    adapterCercanos = new TallerCercanoAdapter(MainClienteActivity.this, response.body(), v -> {
+                        TallerCercanoAdapter.ViewHolder vh = (TallerCercanoAdapter.ViewHolder) rvCercanos.findContainingViewHolder(v);
                         if (vh != null) {
                             Intent intent = new Intent(MainClienteActivity.this, DetalleTallerActivity.class);
                             intent.putExtra("tallerId", vh.getTaller().getId());

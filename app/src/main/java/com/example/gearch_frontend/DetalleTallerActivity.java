@@ -3,6 +3,7 @@ package com.example.gearch_frontend;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -78,8 +79,19 @@ public class DetalleTallerActivity extends AppCompatActivity {
             intent.putExtra("tallerId", tallerId);
             startActivity(intent);
         });
-    }
 
+        // Esto es para la flechita de tirar atras
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    //Para la flechita de tirar atras
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     // Carga los datos principales del taller y muestra la foto si tiene
     private void cargarDatosTaller() {
         api.getTallerById(tallerId).enqueue(new Callback<Taller>() {
@@ -96,8 +108,6 @@ public class DetalleTallerActivity extends AppCompatActivity {
                     if (taller.getFotoPerfil() != null) {
                         ivFoto.setImageBitmap(android.graphics.BitmapFactory.decodeByteArray(
                                 taller.getFotoPerfil(), 0, taller.getFotoPerfil().length));
-                    } else {
-                        ivFoto.setImageResource(R.drawable.ic_launcher_background);
                     }
                 }
             }

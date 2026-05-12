@@ -2,6 +2,7 @@ package com.example.gearch_frontend;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,8 +45,16 @@ public class AnadirVehiculoActivity extends AppCompatActivity {
         usuarioId = prefs.getLong("id", -1);
 
         btnGuardar.setOnClickListener(v -> guardarVehiculo());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void guardarVehiculo() {
         String marca = etMarca.getText().toString().trim();
         String modelo = etModelo.getText().toString().trim();
