@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <!-- Esto para usar internet necesario para retrofit -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- Permiso para obtener la ubicacion aproximada con el WiFi o la red -->
+    <!-- Permiso para usar internet, necesario para Retrofit y Firebase -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Permiso para obtener la ubicacion aproximada con el WiFi o la red -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Permiso para mostrar notificaciones en Android 13 o superior -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gearchfrontend"
         android:usesCleartextTraffic="true">
+
+        <!-- Servicio de Firebase que recibe las notificaciones push -->
+        <service
+            android:name=".GearchFirebaseService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity
             android:name=".PerfilAdminActivity"
             android:exported="false" />
@@ -74,7 +87,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
