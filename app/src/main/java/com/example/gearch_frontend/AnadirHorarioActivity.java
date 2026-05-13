@@ -28,7 +28,7 @@ public class AnadirHorarioActivity extends AppCompatActivity {
     private Spinner spinnerDia;
     private Button btnHoraInicio, btnHoraFin, btnGuardar;
     private ApiService api;
-    private Long adminId;
+    private long adminId;
 
     // Arrays para guardar las horas seleccionadas en los TimePicker
     // Inicializamos con valores por defecto: 09:00 y 18:00
@@ -39,6 +39,9 @@ public class AnadirHorarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anadir_horario);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         spinnerDia = findViewById(R.id.spinnerDia);
         btnHoraInicio = findViewById(R.id.btnHoraInicio);
@@ -71,16 +74,8 @@ public class AnadirHorarioActivity extends AppCompatActivity {
         }, horaFin[0], horaFin[1], true).show());
 
         btnGuardar.setOnClickListener(v -> guardarHorario());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void guardarHorario() {
         DiaSemana dia = (DiaSemana) spinnerDia.getSelectedItem();
 

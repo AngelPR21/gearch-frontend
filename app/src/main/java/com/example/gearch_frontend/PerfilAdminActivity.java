@@ -27,12 +27,15 @@ public class PerfilAdminActivity extends AppCompatActivity {
     private EditText etNombre, etApellidos, etEmail, etTelefono;
     private Button btnGuardar, btnEliminarCuenta;
     private ApiService api;
-    private Long adminId;
+    private long adminId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_admin);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         etNombre = findViewById(R.id.etNombre);
         etApellidos = findViewById(R.id.etApellidos);
@@ -50,16 +53,8 @@ public class PerfilAdminActivity extends AppCompatActivity {
 
         btnGuardar.setOnClickListener(v -> guardarCambios());
         btnEliminarCuenta.setOnClickListener(v -> confirmarEliminarCuenta());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     // Carga los datos del admin y los muestra en los EditText
     private void cargarPerfil() {
         api.getUsuario(adminId).enqueue(new Callback<Usuario>() {

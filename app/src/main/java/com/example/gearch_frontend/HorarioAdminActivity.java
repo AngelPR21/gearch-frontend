@@ -30,7 +30,7 @@ public class HorarioAdminActivity extends AppCompatActivity {
     private RecyclerView rvHorario;
     private Button btnAnadir;
     private ApiService api;
-    private Long adminId;
+    private long adminId;
 
     // Launcher para abrir AnadirHorarioActivity y recargar el horario al volver
     ActivityResultLauncher<Intent> anadirHorarioLauncher = registerForActivityResult(
@@ -46,6 +46,9 @@ public class HorarioAdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_horario_admin);
 
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
+
         rvHorario = findViewById(R.id.rvHorario);
         btnAnadir = findViewById(R.id.btnAnadir);
 
@@ -59,16 +62,8 @@ public class HorarioAdminActivity extends AppCompatActivity {
         btnAnadir.setOnClickListener(v -> {
             anadirHorarioLauncher.launch(new Intent(this, AnadirHorarioActivity.class));
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void cargarHorario() {
         api.getHorario(adminId).enqueue(new Callback<List<DisponibilidadTaller>>() {
             @Override

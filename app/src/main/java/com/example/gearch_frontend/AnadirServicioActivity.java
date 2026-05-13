@@ -24,12 +24,15 @@ public class AnadirServicioActivity extends AppCompatActivity {
     private EditText etNombre, etDescripcion, etPrecio;
     private Button btnGuardar;
     private ApiService api;
-    private Long adminId;
+    private long adminId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anadir_servicio);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         etNombre = findViewById(R.id.etNombre);
         etDescripcion = findViewById(R.id.etDescripcion);
@@ -42,16 +45,8 @@ public class AnadirServicioActivity extends AppCompatActivity {
         adminId = prefs.getLong("id", -1);
 
         btnGuardar.setOnClickListener(v -> guardarServicio());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void guardarServicio() {
         String nombre = etNombre.getText().toString().trim();
         String descripcion = etDescripcion.getText().toString().trim();

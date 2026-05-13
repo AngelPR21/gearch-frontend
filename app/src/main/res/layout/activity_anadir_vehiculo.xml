@@ -19,13 +19,30 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:text="Añadir vehículo"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icono_arrow_back"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:text="Anadir vehiculo"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etMarca"
@@ -43,7 +60,7 @@
 
             <EditText
                 android:id="@+id/etMatricula"
-                android:hint="Matrícula"
+                android:hint="Matricula"
                 android:inputType="textCapCharacters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +68,7 @@
 
             <EditText
                 android:id="@+id/etAnio"
-                android:hint="Año"
+                android:hint="Anio"
                 android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

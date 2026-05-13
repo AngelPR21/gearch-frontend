@@ -26,7 +26,7 @@ public class PerfilActivity extends AppCompatActivity {
     private EditText etNombre, etApellidos, etEmail, etTelefono;
     private Button btnGuardar, btnCerrarSesion, btnEliminarCuenta;
     private ApiService api;
-    private Long usuarioId;
+    private long usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

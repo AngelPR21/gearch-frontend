@@ -31,8 +31,8 @@ public class ServiciosAdminActivity extends AppCompatActivity {
     private RecyclerView rvServicios;
     private Button btnAnadir;
     private ApiService api;
-    private Long tallerId;
-    private Long adminId;
+    private long tallerId;
+    private long adminId;
 
     // Launcher para abrir AnadirServicioActivity y recargar la lista al volver
     ActivityResultLauncher<Intent> anadirServicioLauncher = registerForActivityResult(
@@ -48,6 +48,9 @@ public class ServiciosAdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servicios_admin);
 
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
+
         rvServicios = findViewById(R.id.rvServicios);
         btnAnadir = findViewById(R.id.btnAnadir);
 
@@ -62,17 +65,9 @@ public class ServiciosAdminActivity extends AppCompatActivity {
         btnAnadir.setOnClickListener(v -> {
             anadirServicioLauncher.launch(new Intent(this, AnadirServicioActivity.class));
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void cargarServicios() {
         api.getServiciosByTaller(tallerId).enqueue(new Callback<List<Servicio>>() {
             @Override

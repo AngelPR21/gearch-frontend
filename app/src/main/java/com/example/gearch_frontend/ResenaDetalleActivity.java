@@ -16,6 +16,9 @@ public class ResenaDetalleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resena_detalle);
 
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
+
         TextView tvPuntuacion = findViewById(R.id.tvPuntuacion);
         TextView tvFecha = findViewById(R.id.tvFecha);
         TextView tvComentario = findViewById(R.id.tvComentario);
@@ -24,14 +27,6 @@ public class ResenaDetalleActivity extends AppCompatActivity {
         tvPuntuacion.setText("⭐ " + getIntent().getIntExtra("puntuacion", 0) + "/5");
         tvFecha.setText(getIntent().getStringExtra("fecha"));
         tvComentario.setText(getIntent().getStringExtra("comentario"));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 }

@@ -74,6 +74,12 @@
             android:name=".MisCitasActivity"
             android:exported="false" />
         <activity
+            android:name=".DetalleTallerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReservarActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainClienteActivity"
             android:exported="false" />
         <activity

@@ -26,13 +26,16 @@ public class EscribirResenaActivity extends AppCompatActivity {
     private EditText etComentario;
     private Button btnEnviar;
     private ApiService api;
-    private Long usuarioId;
-    private Long tallerId;
+    private long usuarioId;
+    private long tallerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_escribir_resena);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         ratingBar = findViewById(R.id.ratingBar);
         etComentario = findViewById(R.id.etComentario);
@@ -47,16 +50,8 @@ public class EscribirResenaActivity extends AppCompatActivity {
         usuarioId = prefs.getLong("id", -1);
 
         btnEnviar.setOnClickListener(v -> enviarResena());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void enviarResena() {
         String comentario = etComentario.getText().toString().trim();
         int puntuacion = (int) ratingBar.getRating();

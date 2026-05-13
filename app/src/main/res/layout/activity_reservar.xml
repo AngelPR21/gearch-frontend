@@ -19,16 +19,32 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Título -->
-            <TextView
-                android:text="Reservar cita"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <!-- Cabecera con boton volver y titulo -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
 
-            <!-- Seleccionar fecha -->
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icono_arrow_back"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:text="Reservar cita"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
             <TextView
                 android:text="Selecciona una fecha"
                 android:textSize="16sp"
@@ -43,7 +59,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- Horas disponibles -->
             <TextView
                 android:text="Horas disponibles"
                 android:textSize="16sp"
@@ -61,7 +76,6 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="3"/>
 
-            <!-- Seleccionar servicio -->
             <TextView
                 android:text="Selecciona un servicio"
                 android:textSize="16sp"
@@ -76,9 +90,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- Seleccionar vehículo (opcional) -->
             <TextView
-                android:text="Selecciona un vehículo (opcional)"
+                android:text="Selecciona un vehiculo (opcional)"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp"
@@ -91,7 +104,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"/>
 
-            <!-- Notas -->
             <TextView
                 android:text="Notas adicionales (opcional)"
                 android:textSize="16sp"
@@ -102,7 +114,7 @@
 
             <EditText
                 android:id="@+id/etNotas"
-                android:hint="Escribe aquí cualquier indicación..."
+                android:hint="Escribe aqui cualquier indicacion..."
                 android:inputType="textMultiLine"
                 android:minLines="3"
                 android:layout_width="match_parent"
@@ -113,7 +125,6 @@
 
     </ScrollView>
 
-    <!-- Botón confirmar fijo abajo -->
     <Button
         android:id="@+id/btnConfirmar"
         android:text="Confirmar reserva"

@@ -30,7 +30,7 @@ public class CitasAdminActivity extends AppCompatActivity {
     private Spinner spinnerEstado;
     private RecyclerView rvCitas;
     private ApiService api;
-    private Long tallerId;
+    private long tallerId;
 
     // Guardamos todas las citas para poder filtrar sin volver a llamar al backend
     private List<Cita> todasLasCitas = new ArrayList<>();
@@ -40,6 +40,9 @@ public class CitasAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_citas_admin);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         spinnerEstado = findViewById(R.id.spinnerEstado);
         rvCitas = findViewById(R.id.rvCitas);
@@ -51,16 +54,8 @@ public class CitasAdminActivity extends AppCompatActivity {
 
         configurarSpinner();
         cargarCitas();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void configurarSpinner() {
         List<String> opciones = new ArrayList<>();
         opciones.add("Todas");

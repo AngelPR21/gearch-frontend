@@ -9,7 +9,7 @@ public class ApiClient {
 
     // 10.0.2.2 es el alias del localhost cuando se usa el emulador de Android
     // Para un movil fisico habria que usar la IP de la maquina en la red local
-    private static final String BASE_URL = "http://10.0.2.2:8080/";
+    private static final String BASE_URL = "http://192.168.1.130:8080/";
     private static Retrofit retrofit = null;
 
     // Devuelve la instancia de Retrofit, creandola si no existe

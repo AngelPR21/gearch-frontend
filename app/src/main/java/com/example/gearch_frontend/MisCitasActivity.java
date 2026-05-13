@@ -48,13 +48,13 @@ public class MisCitasActivity extends AppCompatActivity {
         api = ApiClient.getClient().create(ApiService.class);
 
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
-        Long usuarioId = prefs.getLong("id", -1);
+        long usuarioId = prefs.getLong("id", -1);
 
         cargarCitas(usuarioId);
     }
 
     // Carga las citas del usuario y las muestra en el RecyclerView
-    private void cargarCitas(Long usuarioId) {
+    private void cargarCitas(long usuarioId) {
         api.getCitasUsuario(usuarioId).enqueue(new Callback<List<Cita>>() {
             @Override
             public void onResponse(Call<List<Cita>> call, Response<List<Cita>> response) {

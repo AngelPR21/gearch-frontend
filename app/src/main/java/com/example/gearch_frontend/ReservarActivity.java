@@ -42,8 +42,8 @@ public class ReservarActivity extends AppCompatActivity {
     private ApiService api;
     private HoraAdapter horaAdapter;
 
-    private Long tallerId;
-    private Long usuarioId;
+    private long tallerId;
+    private long usuarioId;
 
     // Fecha seleccionada en el calendario en formato yyyy-MM-dd para el backend
     private String fechaSeleccionada;
@@ -55,6 +55,9 @@ public class ReservarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservar);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         calendarView = findViewById(R.id.calendarView);
         rvHoras = findViewById(R.id.rvHoras);
@@ -96,16 +99,8 @@ public class ReservarActivity extends AppCompatActivity {
 
         btnConfirmar.setOnClickListener(v -> confirmarReserva());
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     // Carga los servicios del taller y rellena el Spinner
     private void cargarServicios() {
         api.getServiciosByTaller(tallerId).enqueue(new Callback<List<Servicio>>() {

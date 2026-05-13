@@ -84,7 +84,7 @@ public class MainClienteActivity extends AppCompatActivity {
     // Carga los talleres en los que el usuario ha tenido citas anteriores
     private void cargarTalleresRecientes() {
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
-        Long usuarioId = prefs.getLong("id", -1);
+        long usuarioId = prefs.getLong("id", -1);
 
         api.getCitasUsuario(usuarioId).enqueue(new Callback<List<Cita>>() {
             @Override
@@ -159,7 +159,7 @@ public class MainClienteActivity extends AppCompatActivity {
 
     // Llama al backend con las coordenadas y muestra los talleres en un radio de 10km
     private void cargarTalleresCercanos(double lat, double lng) {
-        api.getTalleresCercanos(lat, lng, 10).enqueue(new Callback<List<Taller>>() {
+        api.getTalleresCercanos(lat, lng, 100).enqueue(new Callback<List<Taller>>() {
             @Override
             public void onResponse(Call<List<Taller>> call, Response<List<Taller>> response) {
                 if (response.isSuccessful() && response.body() != null) {

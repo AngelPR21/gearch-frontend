@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Usuario usuario = response.body();
-
+                    Log.d("LOGIN", "tallerAdministradoId: " + usuario.getTallerAdministradoId());
                     // Guardamos los datos de sesion en SharedPreferences
                     // SharedPreferences es como el LocalStorage de JavaScript, guarda datos simples en un fichero XML interno
                     SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Si es admin guardamos el id del taller con la clave "tallerId"
                     // Esta clave se usa en MainAdminActivity, CitasAdminActivity y demas pantallas admin
                     if (usuario.getTallerAdministradoId() != null) {
-                        editor.putLong("tallerId", usuario.getTallerAdministradoId());
+                        editor.putLong("tallerId", usuario.getTallerAdministradoId().longValue());
                     }
                     editor.apply();
 

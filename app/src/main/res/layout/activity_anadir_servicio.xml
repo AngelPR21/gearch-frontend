@@ -19,13 +19,30 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:text="Añadir servicio"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/icono_arrow_back"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:text="Anadir servicio"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/etNombre"
@@ -36,7 +53,7 @@
 
             <EditText
                 android:id="@+id/etDescripcion"
-                android:hint="Descripción"
+                android:hint="Descripcion"
                 android:inputType="textMultiLine"
                 android:minLines="3"
                 android:gravity="top"
@@ -46,7 +63,7 @@
 
             <EditText
                 android:id="@+id/etPrecio"
-                android:hint="Precio (€)"
+                android:hint="Precio (EUR)"
                 android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -31,7 +31,7 @@ public class MisVehiculosActivity extends AppCompatActivity {
     private Button btnAnadir;
     private VehiculoAdapter adapter;
     private ApiService api;
-    private Long usuarioId;
+    private long usuarioId;
 
     // Launcher para abrir AnadirVehiculoActivity y recargar la lista al volver
     // registerForActivityResult es el reemplazo moderno de startActivityForResult

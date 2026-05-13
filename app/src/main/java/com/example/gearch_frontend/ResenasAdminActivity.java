@@ -27,12 +27,15 @@ public class ResenasAdminActivity extends AppCompatActivity {
     private TextView tvEstadisticas;
     private RecyclerView rvResenas;
     private ApiService api;
-    private Long tallerId;
+    private long tallerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resenas_admin);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         tvEstadisticas = findViewById(R.id.tvEstadisticas);
         rvResenas = findViewById(R.id.rvResenas);
@@ -43,16 +46,8 @@ public class ResenasAdminActivity extends AppCompatActivity {
         tallerId = prefs.getLong("tallerId", -1);
 
         cargarResenas();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void cargarResenas() {
         api.getResenasByTaller(tallerId).enqueue(new Callback<List<Resena>>() {
             @Override

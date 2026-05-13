@@ -24,12 +24,15 @@ public class AnadirVehiculoActivity extends AppCompatActivity {
     private EditText etMarca, etModelo, etMatricula, etAnio, etColor, etCombustible;
     private Button btnGuardar;
     private ApiService api;
-    private Long usuarioId;
+    private long usuarioId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anadir_vehiculo);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         etMarca = findViewById(R.id.etMarca);
         etModelo = findViewById(R.id.etModelo);
@@ -45,16 +48,8 @@ public class AnadirVehiculoActivity extends AppCompatActivity {
         usuarioId = prefs.getLong("id", -1);
 
         btnGuardar.setOnClickListener(v -> guardarVehiculo());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     private void guardarVehiculo() {
         String marca = etMarca.getText().toString().trim();
         String modelo = etModelo.getText().toString().trim();

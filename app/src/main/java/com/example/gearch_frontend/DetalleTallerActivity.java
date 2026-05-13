@@ -37,12 +37,15 @@ public class DetalleTallerActivity extends AppCompatActivity {
     private RecyclerView rvServicios, rvResenas;
     private Button btnReservar, btnEscribirResena;
     private ApiService api;
-    private Long tallerId;
+    private long tallerId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_taller);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         tvNombre = findViewById(R.id.tvNombreTaller);
         tvDireccion = findViewById(R.id.tvDireccion);
@@ -80,18 +83,8 @@ public class DetalleTallerActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Esto es para la flechita de tirar atras
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    //Para la flechita de tirar atras
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     // Carga los datos principales del taller y muestra la foto si tiene
     private void cargarDatosTaller() {
         api.getTallerById(tallerId).enqueue(new Callback<Taller>() {

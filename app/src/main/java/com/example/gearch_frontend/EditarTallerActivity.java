@@ -35,7 +35,7 @@ public class EditarTallerActivity extends AppCompatActivity {
     private Button btnCambiarFoto, btnGuardar;
     private EditText etNombre, etDireccion, etTelefono, etDescripcion;
     private ApiService api;
-    private Long adminId;
+    private long adminId;
     private Taller tallerActual;
 
     // Launcher para seleccionar una foto de la galeria del movil
@@ -54,6 +54,9 @@ public class EditarTallerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_taller);
+
+        // Boton de volver atras
+        findViewById(R.id.btnVolver).setOnClickListener(v -> finish());
 
         ivFotoTaller = findViewById(R.id.ivFotoTaller);
         btnCambiarFoto = findViewById(R.id.btnCambiarFoto);
@@ -74,17 +77,9 @@ public class EditarTallerActivity extends AppCompatActivity {
         btnCambiarFoto.setOnClickListener(v -> seleccionarFotoLauncher.launch("image/*"));
 
         btnGuardar.setOnClickListener(v -> guardarCambios());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
     // Carga los datos actuales del taller y los muestra en los EditText
     private void cargarTaller() {
         api.getMiTaller(adminId).enqueue(new Callback<Taller>() {
@@ -113,11 +108,15 @@ public class EditarTallerActivity extends AppCompatActivity {
     }
 
     private void guardarCambios() {
+
         String nombre = etNombre.getText().toString().trim();
         String direccion = etDireccion.getText().toString().trim();
         String telefono = etTelefono.getText().toString().trim();
         String descripcion = etDescripcion.getText().toString().trim();
-
+        if (tallerActual == null) {
+            Toast.makeText(this, "Error: taller no cargado", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (nombre.isEmpty() || direccion.isEmpty() || telefono.isEmpty()) {
             Toast.makeText(this, "Nombre, direccion y telefono son obligatorios", Toast.LENGTH_SHORT).show();
             return;
