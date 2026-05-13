@@ -180,4 +180,9 @@ public interface ApiService {
     @Multipart
     @POST("api/admin/{adminId}/taller/foto")
     Call<Void> subirFotoTaller(@Path("adminId") Long adminId, @Part MultipartBody.Part foto);
+
+    // PATCH /api/usuarios/{id}/fcm-token?token=xxxxx
+    // Envia el token de Firebase al backend para poder recibir notificaciones push
+    @PATCH("api/usuarios/{id}/fcm-token")
+    Call<Void> actualizarFcmToken(@Path("id") Long id, @Query("token") String token);
 }

@@ -1,5 +1,7 @@
 package com.example.gearch_frontend;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import com.example.gearch_frontend.api.ApiClient;
 import com.example.gearch_frontend.api.ApiService;
 import com.example.gearch_frontend.api.models.Usuario;
 import com.example.gearch_frontend.api.models.enums.RolUsuario;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,6 +76,23 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putLong("id", usuario.getId());
                     editor.putString("rol", usuario.getRol().name());
+
+                    // Obtenemos el token de Firebase del dispositivo y lo enviamos al backend
+                    // El token puede cambiar si el usuario reinstala la app o Firebase lo renueva
+                    FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+                        if (token != null) {
+                            api.actualizarFcmToken(usuario.getId(), token).enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    // No hacemos nada si falla, no es critico para el login
+                                }
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    // No hacemos nada si falla, no es critico para el login
+                                }
+                            });
+                        }
+                    });
 
                     // Si es admin guardamos el id del taller con la clave "tallerId"
                     // Esta clave se usa en MainAdminActivity, CitasAdminActivity y demas pantallas admin
