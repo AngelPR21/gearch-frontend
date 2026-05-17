@@ -11,16 +11,13 @@ import com.example.gearch_frontend.api.models.Vehiculo;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -95,10 +92,10 @@ public interface ApiService {
             @Body Cita cita
     );
 
-    // PATCH /api/citas/{id}/estado?estado=CANCELADA
-    // Cambia el estado de una cita
+    // PATCH /api/citas/{id}/estado
+    // Cancela una cita desde el cliente, el estado lo pone el backend directamente
     @PATCH("api/citas/{id}/estado")
-    Call<Cita> actualizarEstadoCita(@Path("id") Long id, @Query("estado") String estado);
+    Call<Cita> cancelarCita(@Path("id") Long id);
 
     // DELETE /api/vehiculos/{id}
     // Elimina un vehiculo por id
@@ -173,16 +170,15 @@ public interface ApiService {
     // PUT /api/admin/{adminId}/taller
     // Actualiza los datos del taller del admin
     @PUT("api/admin/{adminId}/taller")
-    Call<Taller> actualizarTaller(@Path("adminId") Long adminId, @Body Taller taller);
-
-    // POST /api/admin/{adminId}/taller/foto
-    // Sube o reemplaza la foto de perfil del taller como multipart
-    @Multipart
-    @POST("api/admin/{adminId}/taller/foto")
-    Call<Void> subirFotoTaller(@Path("adminId") Long adminId, @Part MultipartBody.Part foto);
+    Call<Void> actualizarTaller(@Path("adminId") long adminId, @Body Taller taller);
 
     // PATCH /api/usuarios/{id}/fcm-token?token=xxxxx
     // Envia el token de Firebase al backend para poder recibir notificaciones push
     @PATCH("api/usuarios/{id}/fcm-token")
     Call<Void> actualizarFcmToken(@Path("id") Long id, @Query("token") String token);
+
+    // PATCH /api/admin/{adminId}/citas/{citaId}/estado?estado=CANCELADA
+    // El admin cambia el estado de una cita y el backend notifica al cliente
+    @PATCH("api/admin/{adminId}/citas/{citaId}/estado")
+    Call<Cita> cambiarEstadoCitaAdmin(@Path("adminId") long adminId, @Path("citaId") Long citaId, @Query("estado") String estado);
 }

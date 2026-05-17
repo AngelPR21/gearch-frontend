@@ -9,7 +9,7 @@ public class Cita {
     private Servicio servicio;
 
     // No se puede usar LocalDateTime porque Gson no lo convierte automaticamente
-    // Se usa String con formato "yyyy-MM-ddTHH:mm:ss" que el backend deserializa como LocalDateTime
+    // Se usa String con formato "dd/MM/yyyy HH:mm" que es el formato que devuelve el backend
     private String fechaHora;
     private EstadoCita estado;
     private String notas;

@@ -42,13 +42,21 @@ public class ResenaAdapter extends RecyclerView.Adapter<ResenaAdapter.ViewHolder
         Resena resena = resenas.get(position);
         holder.tvPuntuacion.setText("⭐ " + resena.getPuntuacion() + "/5");
         holder.tvComentario.setText(resena.getComentario());
-        holder.tvFecha.setText(resena.getFecha());
+        //convertimos el formato ISO a "dd/MM/yyyy"
+        String fechaFormateada = resena.getFecha();
+        if (fechaFormateada != null && fechaFormateada.length() >= 10) {
+            String[] partes = fechaFormateada.substring(0, 10).split("-");
+            fechaFormateada = partes[2] + "/" + partes[1] + "/" + partes[0];
+        }
+        holder.tvFecha.setText(fechaFormateada);
 
-        // Al pulsar la resena abrimos el detalle pasando los datos por Intent
+        // Variable final para poder usarla dentro del lambda ya que se reasigna mas arriba y lambda no lo acepta
+        final String fechaParaIntent = fechaFormateada;
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ResenaDetalleActivity.class);
             intent.putExtra("puntuacion", resena.getPuntuacion());
-            intent.putExtra("fecha", resena.getFecha());
+            intent.putExtra("fecha", fechaParaIntent);
             intent.putExtra("comentario", resena.getComentario());
             context.startActivity(intent);
         });

@@ -86,6 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        // Validamos que el email tenga un formato correcto
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Introduce un email valido", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
@@ -139,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
         taller.setDescripcion(descripcion);
 
         // Geocoder convierte la direccion escrita por el usuario en coordenadas (latitud y longitud)
-        // Si falla se guarda el taller sin coordenadas, no aparecer en cercanos pero si en buscar
+        // Si falla se guarda el taller sin coordenadas, no aparece en cercanos pero si en buscar
         try {
             Geocoder geocoder = new Geocoder(RegisterActivity.this);
             // El 1 indica que solo queremos 1 coincidencia de la direccion

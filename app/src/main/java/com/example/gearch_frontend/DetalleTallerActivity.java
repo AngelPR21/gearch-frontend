@@ -1,11 +1,8 @@
 package com.example.gearch_frontend;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +30,6 @@ import retrofit2.Response;
 public class DetalleTallerActivity extends AppCompatActivity {
 
     private TextView tvNombre, tvDireccion, tvTelefono, tvDescripcion;
-    private ImageView ivFoto;
     private RecyclerView rvServicios, rvResenas;
     private Button btnReservar, btnEscribirResena;
     private ApiService api;
@@ -51,7 +47,6 @@ public class DetalleTallerActivity extends AppCompatActivity {
         tvDireccion = findViewById(R.id.tvDireccion);
         tvTelefono = findViewById(R.id.tvTelefono);
         tvDescripcion = findViewById(R.id.tvDescripcion);
-        ivFoto = findViewById(R.id.ivFotoTaller);
         rvServicios = findViewById(R.id.rvServicios);
         rvResenas = findViewById(R.id.rvResenas);
         btnReservar = findViewById(R.id.btnReservar);
@@ -82,10 +77,9 @@ public class DetalleTallerActivity extends AppCompatActivity {
             intent.putExtra("tallerId", tallerId);
             startActivity(intent);
         });
-
     }
 
-    // Carga los datos principales del taller y muestra la foto si tiene
+    // Carga los datos principales del taller
     private void cargarDatosTaller() {
         api.getTallerById(tallerId).enqueue(new Callback<Taller>() {
             @Override
@@ -96,12 +90,6 @@ public class DetalleTallerActivity extends AppCompatActivity {
                     tvDireccion.setText(taller.getDireccion());
                     tvTelefono.setText(taller.getTelefono());
                     tvDescripcion.setText(taller.getDescripcion());
-
-                    // Si el taller no tiene foto mostramos la imagen por defecto
-                    if (taller.getFotoPerfil() != null) {
-                        ivFoto.setImageBitmap(android.graphics.BitmapFactory.decodeByteArray(
-                                taller.getFotoPerfil(), 0, taller.getFotoPerfil().length));
-                    }
                 }
             }
 

@@ -2,7 +2,6 @@ package com.example.gearch_frontend;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -31,6 +30,7 @@ public class CitasAdminActivity extends AppCompatActivity {
     private RecyclerView rvCitas;
     private ApiService api;
     private long tallerId;
+    private long adminId;
 
     // Guardamos todas las citas para poder filtrar sin volver a llamar al backend
     private List<Cita> todasLasCitas = new ArrayList<>();
@@ -51,6 +51,7 @@ public class CitasAdminActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
         tallerId = prefs.getLong("tallerId", -1);
+        adminId = prefs.getLong("id", -1);
 
         configurarSpinner();
         cargarCitas();
@@ -96,10 +97,12 @@ public class CitasAdminActivity extends AppCompatActivity {
 
         adapter = new CitaAdminAdapter(this, citasFiltradas,
                 v -> {
+                    // Boton CANCELAR
                     CitaAdminAdapter.ViewHolder vh = (CitaAdminAdapter.ViewHolder) rvCitas.findContainingViewHolder(v);
                     if (vh != null) cambiarEstado(vh.getCita(), "CANCELADA");
                 },
                 v -> {
+                    // Boton COMPLETAR
                     CitaAdminAdapter.ViewHolder vh = (CitaAdminAdapter.ViewHolder) rvCitas.findContainingViewHolder(v);
                     if (vh != null) cambiarEstado(vh.getCita(), "COMPLETADA");
                 });
@@ -124,8 +127,9 @@ public class CitasAdminActivity extends AppCompatActivity {
         });
     }
 
+    // El admin cambia el estado de una cita y el backend notifica al cliente
     private void cambiarEstado(Cita cita, String estado) {
-        api.actualizarEstadoCita(cita.getId(), estado).enqueue(new Callback<Cita>() {
+        api.cambiarEstadoCitaAdmin(adminId, cita.getId(), estado).enqueue(new Callback<Cita>() {
             @Override
             public void onResponse(Call<Cita> call, Response<Cita> response) {
                 if (response.isSuccessful()) {

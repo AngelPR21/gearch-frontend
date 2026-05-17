@@ -60,6 +60,13 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             holder.tvServicio.setText(cita.getServicio().getNombre());
         }
 
+        // El vehiculo es opcional, si no tiene se oculta el TextView
+        if (cita.getVehiculo() != null) {
+            holder.tvVehiculo.setText(cita.getVehiculo().getMarca() + " " + cita.getVehiculo().getModelo() + " - " + cita.getVehiculo().getMatricula());
+        } else {
+            holder.tvVehiculo.setVisibility(View.GONE);
+        }
+
         if (cita.getNotas() != null && !cita.getNotas().isEmpty()) {
             holder.tvNotas.setText(cita.getNotas());
         } else {
@@ -72,7 +79,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
         } else {
             holder.btnCancelar.setVisibility(View.VISIBLE);
             holder.btnCancelar.setOnClickListener(v -> {
-                api.actualizarEstadoCita(cita.getId(), "CANCELADA").enqueue(new Callback<Cita>() {
+                api.cancelarCita(cita.getId()).enqueue(new Callback<Cita>() {
                     @Override
                     public void onResponse(Call<Cita> call, Response<Cita> response) {
                         if (response.isSuccessful()) {
@@ -104,7 +111,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvFechaHora, tvTaller, tvServicio, tvNotas, tvEstado;
+        private TextView tvFechaHora, tvTaller, tvServicio, tvVehiculo, tvNotas, tvEstado;
         private Button btnCancelar;
 
         public ViewHolder(@NonNull View itemView) {
@@ -112,6 +119,7 @@ public class CitaAdapter extends RecyclerView.Adapter<CitaAdapter.ViewHolder> {
             tvFechaHora = itemView.findViewById(R.id.tvFechaHora);
             tvTaller = itemView.findViewById(R.id.tvTaller);
             tvServicio = itemView.findViewById(R.id.tvServicio);
+            tvVehiculo = itemView.findViewById(R.id.tvVehiculo);
             tvNotas = itemView.findViewById(R.id.tvNotas);
             tvEstado = itemView.findViewById(R.id.tvEstado);
             btnCancelar = itemView.findViewById(R.id.btnCancelar);

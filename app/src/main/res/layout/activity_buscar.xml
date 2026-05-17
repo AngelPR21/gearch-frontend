@@ -5,30 +5,44 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".BuscarActivity">
 
-    <EditText
-        android:id="@+id/etBuscar"
-        android:hint="Buscar taller..."
-        android:inputType="text"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/layoutCabecera"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/naranja"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnBuscarTaller"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btnBuscarTaller"
-        android:text="Buscar"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        <EditText
+            android:id="@+id/etBuscar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/input_background_white"
+            android:hint="Buscar taller..."
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColor="@color/texto"
+            android:textColorHint="@color/gris_texto" />
+
+        <Button
+            android:id="@+id/btnBuscarTaller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:text="Buscar"
+            android:textColor="@color/naranja"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvResultados"
@@ -36,67 +50,73 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/etBuscar"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/layoutCabecera" />
+
 
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/white"
         android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/btnHome"
-            android:src="@drawable/home"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home"
+            app:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnCitas"
-            android:src="@drawable/calendar"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/calendar"
+            app:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnBuscar"
-            android:src="@drawable/search"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/search"
+            app:tint="@color/naranja" />
 
         <ImageButton
             android:id="@+id/btnVehiculos"
-            android:src="@drawable/car"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/car"
+            app:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnUsuario"
-            android:src="@drawable/user"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user"
+            app:tint="@color/gris_texto" />
 
     </LinearLayout>
 

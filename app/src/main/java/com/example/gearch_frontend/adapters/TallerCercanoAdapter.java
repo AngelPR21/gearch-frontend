@@ -48,11 +48,13 @@ public class TallerCercanoAdapter extends RecyclerView.Adapter<TallerCercanoAdap
         holder.setTaller(taller);
         holder.itemView.setOnClickListener(onClickListener);
 
-        // Si el taller tiene foto la mostramos, si no dejamos la imagen por defecto del XML
-        if (taller.getFotoPerfil() != null) {
-            holder.ivFoto.setImageBitmap(BitmapFactory.decodeByteArray(
-                    taller.getFotoPerfil(), 0, taller.getFotoPerfil().length));
-        }
+    //Esto es porque no pude implementar las fotos de perfil de los talleres
+
+//        // Si el taller tiene foto la mostramos, si no dejamos la imagen por defecto del XML
+//        if (taller.getFotoPerfil() != null) {
+//            holder.ivFoto.setImageBitmap(BitmapFactory.decodeByteArray(
+//                    taller.getFotoPerfil(), 0, taller.getFotoPerfil().length));
+//        }
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.example.gearch_frontend;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,7 +24,7 @@ import retrofit2.Response;
 public class PerfilAdminActivity extends AppCompatActivity {
 
     private EditText etNombre, etApellidos, etEmail, etTelefono;
-    private Button btnGuardar, btnEliminarCuenta;
+    private Button btnGuardar, btnCerrarSesion, btnEliminarCuenta;
     private ApiService api;
     private long adminId;
 
@@ -42,6 +41,7 @@ public class PerfilAdminActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etTelefono = findViewById(R.id.etTelefono);
         btnGuardar = findViewById(R.id.btnGuardar);
+        btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
         btnEliminarCuenta = findViewById(R.id.btnEliminarCuenta);
 
         api = ApiClient.getClient().create(ApiService.class);
@@ -52,6 +52,7 @@ public class PerfilAdminActivity extends AppCompatActivity {
         cargarPerfil();
 
         btnGuardar.setOnClickListener(v -> guardarCambios());
+        btnCerrarSesion.setOnClickListener(v -> cerrarSesion());
         btnEliminarCuenta.setOnClickListener(v -> confirmarEliminarCuenta());
     }
 
@@ -108,6 +109,26 @@ public class PerfilAdminActivity extends AppCompatActivity {
                 Toast.makeText(PerfilAdminActivity.this, "Error de conexion", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    // Borra el token FCM del backend y limpia las SharedPreferences
+    private void cerrarSesion() {
+        SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
+
+        // Borramos el token FCM del backend para que no lleguen notificaciones a este dispositivo
+        if (adminId != -1) {
+            api.actualizarFcmToken(adminId, "").enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {}
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {}
+            });
+        }
+
+        prefs.edit().clear().apply();
+        Intent intent = new Intent(PerfilAdminActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     // Muestra un dialogo de confirmacion antes de eliminar la cuenta

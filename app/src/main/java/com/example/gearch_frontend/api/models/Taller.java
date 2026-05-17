@@ -1,7 +1,6 @@
 package com.example.gearch_frontend.api.models;
 
 // Modelo que representa un taller mecanico
-// La foto se almacena como array de bytes porque el backend la guarda con @Lob en MySQL
 public class Taller {
     private Long id;
     private String nombre;
@@ -10,9 +9,6 @@ public class Taller {
     private String descripcion;
     private Double latitud;
     private Double longitud;
-
-    // Si es null el frontend muestra una imagen por defecto
-    private byte[] fotoPerfil;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -34,7 +30,4 @@ public class Taller {
 
     public Double getLongitud() { return longitud; }
     public void setLongitud(Double longitud) { this.longitud = longitud; }
-
-    public byte[] getFotoPerfil() { return fotoPerfil; }
-    public void setFotoPerfil(byte[] fotoPerfil) { this.fotoPerfil = fotoPerfil; }
 }

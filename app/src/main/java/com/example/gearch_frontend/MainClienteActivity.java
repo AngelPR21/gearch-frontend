@@ -91,12 +91,20 @@ public class MainClienteActivity extends AppCompatActivity {
             public void onResponse(Call<List<Cita>> call, Response<List<Cita>> response) {
                 if (response.isSuccessful() && response.body() != null) {
 
-                    // Extraemos los talleres de las citas sin repetir
-                    // Si el usuario tiene 3 citas en el mismo taller, solo aparece una vez
+                    // Extraemos los talleres de las citas sin repetir comparando por id
                     List<Taller> talleresRecientes = new ArrayList<>();
                     for (Cita cita : response.body()) {
-                        if (cita.getTaller() != null && !talleresRecientes.contains(cita.getTaller())) {
-                            talleresRecientes.add(cita.getTaller());
+                        if (cita.getTaller() != null) {
+                            boolean yaEsta = false;
+                            for (Taller t : talleresRecientes) {
+                                if (t.getId().equals(cita.getTaller().getId())) {
+                                    yaEsta = true;
+                                    break;
+                                }
+                            }
+                            if (!yaEsta) {
+                                talleresRecientes.add(cita.getTaller());
+                            }
                         }
                     }
 

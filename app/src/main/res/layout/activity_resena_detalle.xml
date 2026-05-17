@@ -5,68 +5,68 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".ResenaDetalleActivity">
 
-    <!-- Cabecera con boton volver -->
     <LinearLayout
         android:id="@+id/layoutCabecera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/btnVolver"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/icono_arrow_back"
+            android:layout_marginStart="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="8dp"
-            android:layout_marginStart="8dp"/>
+            android:src="@drawable/icono_arrow_back" />
 
         <TextView
-            android:text="Resena"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Reseña"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvPuntuacion"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/layoutCabecera"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCabecera" />
 
     <TextView
         android:id="@+id/tvFecha"
-        android:textSize="12sp"
-        android:textColor="#888888"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvPuntuacion"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#888888"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPuntuacion" />
 
     <TextView
         android:id="@+id/tvComentario"
-        android:textSize="16sp"
-        android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvFecha"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvFecha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

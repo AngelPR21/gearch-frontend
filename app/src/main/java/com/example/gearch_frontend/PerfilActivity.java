@@ -120,18 +120,28 @@ public class PerfilActivity extends AppCompatActivity {
         });
     }
 
-    // Limpia las SharedPreferences y vuelve al login
+    // Borra el token FCM del backend y limpia las SharedPreferences
     private void cerrarSesion() {
         SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
+
+        // Borramos el token FCM del backend para que no lleguen notificaciones a este dispositivo
+        if (usuarioId != -1) {
+            api.actualizarFcmToken(usuarioId, "").enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {}
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {}
+            });
+        }
+
         prefs.edit().clear().apply();
-        Intent intent = new Intent(this, LoginActivity.class);
-        //
+        Intent intent = new Intent(PerfilActivity.this, LoginActivity.class);
         /*
         Limpiamos el back stack para que no pueda volver atras con el boton de retroceso
 
-        Los dos juntos consiguen que al cerrar sesión el usuario no pueda pulsar el botón de atrás
-        del móvil y volver a una pantalla de la app sin estar logueado.
-        Sin estos flags podría volver atrás y seguir viendo pantallas aunque ya haya cerrado sesión.
+        Los dos juntos consiguen que al cerrar sesion el usuario no pueda pulsar el boton de atras
+        del movil y volver a una pantalla de la app sin estar logueado.
+        Sin estos flags podria volver atras y seguir viendo pantallas aunque ya haya cerrado sesion.
 
         Usa el | (OR) porque es la forma de combinar ambos
          */

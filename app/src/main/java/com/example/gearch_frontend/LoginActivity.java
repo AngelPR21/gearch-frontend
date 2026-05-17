@@ -40,6 +40,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Si ya hay sesion guardada saltamos directamente a la pantalla principal
+        SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);
+        String rol = prefs.getString("rol", null);
+        if (rol != null) {
+            if (rol.equals("ADMIN_TALLER")) {
+                startActivity(new Intent(this, MainAdminActivity.class));
+            } else {
+                startActivity(new Intent(this, MainClienteActivity.class));
+            }
+            finish();
+            return;
+        }
+
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -70,7 +83,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Usuario usuario = response.body();
-                    Log.d("LOGIN", "tallerAdministradoId: " + usuario.getTallerAdministradoId());
                     // Guardamos los datos de sesion en SharedPreferences
                     // SharedPreferences es como el LocalStorage de JavaScript, guarda datos simples en un fichero XML interno
                     SharedPreferences prefs = getSharedPreferences("gearch", MODE_PRIVATE);

@@ -27,7 +27,7 @@ import retrofit2.Response;
 public class MainAdminActivity extends AppCompatActivity {
 
     private TextView tvNombreTaller, tvPuntuacion;
-    private Button btnCitas, btnServicios, btnHorario, btnResenas, btnEditarTaller, btnCerrarSesion;
+    private Button btnCitas, btnServicios, btnHorario, btnResenas, btnEditarTaller;
     private ApiService api;
     private long tallerId;
 
@@ -42,7 +42,6 @@ public class MainAdminActivity extends AppCompatActivity {
         btnHorario = findViewById(R.id.btnHorario);
         btnResenas = findViewById(R.id.btnResenas);
         btnEditarTaller = findViewById(R.id.btnEditarTaller);
-        btnCerrarSesion = findViewById(R.id.btnCerrarSesion);
         Button btnPerfil = findViewById(R.id.btnPerfil);
         api = ApiClient.getClient().create(ApiService.class);
 
@@ -60,13 +59,6 @@ public class MainAdminActivity extends AppCompatActivity {
         btnEditarTaller.setOnClickListener(v -> startActivity(new Intent(this, EditarTallerActivity.class)));
         btnPerfil.setOnClickListener(v -> startActivity(new Intent(this, PerfilAdminActivity.class)));
 
-        btnCerrarSesion.setOnClickListener(v -> {
-            // Limpiamos la sesion y volvemos al login
-            prefs.edit().clear().apply();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        });
     }
 
     // Carga el nombre del taller para mostrarlo en la cabecera
@@ -96,7 +88,7 @@ public class MainAdminActivity extends AppCompatActivity {
                     int total = resenas.size();
 
                     if (total == 0) {
-                        tvPuntuacion.setText("Sin resenas todavia");
+                        tvPuntuacion.setText("Sin reseñas todavía");
                         return;
                     }
 

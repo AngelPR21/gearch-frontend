@@ -5,13 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".EditarTallerActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/btnGuardar">
+        app:layout_constraintBottom_toTopOf="@+id/btnGuardar"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,73 +23,62 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginBottom="24dp"
                 android:gravity="center_vertical"
-                android:layout_marginBottom="24dp">
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/btnVolver"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/icono_arrow_back"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="8dp"/>
+                    android:padding="8dp"
+                    android:src="@drawable/icono_arrow_back" />
 
                 <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
                     android:text="Editar taller"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/ivFotoTaller"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_garage"
-                android:layout_marginBottom="8dp"/>
-
-            <Button
-                android:id="@+id/btnCambiarFoto"
-                android:text="Cambiar foto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"/>
-
             <EditText
                 android:id="@+id/etNombre"
-                android:hint="Nombre del taller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:hint="Nombre del taller"
+                android:textColorHint="#736F6F" />
 
             <EditText
                 android:id="@+id/etDireccion"
-                android:hint="Direccion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:hint="Dirección"
+                android:textColorHint="#736F6F" />
 
             <EditText
                 android:id="@+id/etTelefono"
-                android:hint="Telefono"
-                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:hint="Teléfono"
+                android:inputType="phone"
+                android:textColorHint="#736F6F" />
 
             <EditText
                 android:id="@+id/etDescripcion"
-                android:hint="Descripcion"
-                android:inputType="textMultiLine"
-                android:minLines="3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:hint="Descripción"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:textColorHint="#736F6F" />
 
         </LinearLayout>
 
@@ -96,12 +86,15 @@
 
     <Button
         android:id="@+id/btnGuardar"
-        android:text="Guardar cambios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:backgroundTint="@color/naranja"
+        android:text="Guardar cambios"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

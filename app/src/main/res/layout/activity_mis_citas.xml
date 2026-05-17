@@ -5,19 +5,38 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".MisCitasActivity">
 
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:text="Mis citas"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layoutCabecera"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:background="@color/naranja"
+        android:padding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mis citas"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spinnerEstado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCabecera" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCitas"
@@ -25,67 +44,72 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitulo"
         app:layout_constraintBottom_toTopOf="@+id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/spinnerEstado" />
 
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:background="@android:color/white"
+        android:background="@color/white"
         android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
             android:id="@+id/btnHome"
-            android:src="@drawable/home"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home"
+            android:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnCitas"
-            android:src="@drawable/calendar"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/calendar"
+            android:tint="@color/naranja" />
 
         <ImageButton
             android:id="@+id/btnBuscar"
-            android:src="@drawable/search"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/search"
+            android:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnVehiculos"
-            android:src="@drawable/car"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/car"
+            android:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnUsuario"
-            android:src="@drawable/user"
-            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:scaleType="fitCenter"/>
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user"
+            android:tint="@color/gris_texto" />
 
     </LinearLayout>
 

@@ -5,90 +5,118 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/fondo"
     tools:context=".MainAdminActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="32dp"
-            android:gravity="center_horizontal">
+            android:orientation="vertical">
 
-            <!-- Cabecera -->
-            <TextView
-                android:id="@+id/tvNombreTaller"
-                android:text="Mi Taller"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/tvPuntuacion"
-                android:text="0.0 (0 resenas)"
-                android:textSize="16sp"
-                android:layout_marginBottom="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <!-- Botones -->
-            <Button
-                android:id="@+id/btnCitas"
-                android:text="Gestionar citas"
+            <!-- Cabecera naranja -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:background="@color/naranja"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <Button
-                android:id="@+id/btnServicios"
-                android:text="Gestionar servicios"
+                <TextView
+                    android:id="@+id/tvNombreTaller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:text="Mi Taller"
+                    android:textColor="@color/white"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPuntuacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0.0 (0 resenas)"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                android:orientation="vertical"
+                android:padding="24dp">
 
-            <Button
-                android:id="@+id/btnHorario"
-                android:text="Gestionar horario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                <Button
+                    android:id="@+id/btnCitas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Gestionar citas"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnResenas"
-                android:text="Ver resenas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                <Button
+                    android:id="@+id/btnServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Gestionar servicios"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnEditarTaller"
-                android:text="Editar taller"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"/>
+                <Button
+                    android:id="@+id/btnHorario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Gestionar horario"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnPerfil"
-                android:text="Mi perfil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"/>
+                <Button
+                    android:id="@+id/btnResenas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Ver reseñas"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnCerrarSesion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="#FF0000"
-                android:text="Cerrar sesion" />
+                <Button
+                    android:id="@+id/btnEditarTaller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Editar taller"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnPerfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp"
+                    android:backgroundTint="@color/gris_texto"
+                    android:text="Mi perfil"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

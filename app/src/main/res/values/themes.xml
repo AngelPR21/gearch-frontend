@@ -6,6 +6,9 @@
         <item name="android:windowBackground">@color/fondo</item>
         <!-- Color del texto principal -->
         <item name="android:textColorPrimary">@color/texto</item>
+
+
+
     </style>
 
     <style name="Theme.Gearchfrontend" parent="Base.Theme.Gearchfrontend" />
