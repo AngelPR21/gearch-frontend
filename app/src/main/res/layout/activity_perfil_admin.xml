@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="Mi perfil"
+                    android:textColor="#1B1B2F"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -100,6 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#E53935"
+                android:textColor="@color/white"
+
                 android:text="Eliminar cuenta" />
 
         </LinearLayout>

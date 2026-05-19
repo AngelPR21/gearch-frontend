@@ -40,6 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="Reservar cita"
+                    android:textColor="#1B1B2F"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 
@@ -51,7 +52,9 @@
                 android:layout_marginBottom="8dp"
                 android:text="Selecciona una fecha"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                    android:textColor="#1B1B2F"
+                />
 
             <CalendarView
                 android:id="@+id/calendarView"
@@ -65,7 +68,9 @@
                 android:layout_marginBottom="8dp"
                 android:text="Horas disponibles"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                    android:textColor="#1B1B2F"
+                />
 
             <GridLayout
                 android:id="@+id/gridHoras"
@@ -80,7 +85,9 @@
                 android:layout_marginBottom="8dp"
                 android:text="Selecciona un servicio"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                    android:textColor="#1B1B2F"
+                />
 
             <Spinner
                 android:id="@+id/spinnerServicios"
@@ -94,7 +101,9 @@
                 android:layout_marginBottom="8dp"
                 android:text="Selecciona un vehiculo (opcional)"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                    android:textColor="#1B1B2F"
+                />
 
             <Spinner
                 android:id="@+id/spinnerVehiculos"
@@ -108,7 +117,9 @@
                 android:layout_marginBottom="8dp"
                 android:text="Notas adicionales (opcional)"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                    android:textColor="#1B1B2F"
+                />
 
             <EditText
                 android:id="@+id/etNotas"

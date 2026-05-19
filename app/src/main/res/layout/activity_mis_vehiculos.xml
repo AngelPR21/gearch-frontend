@@ -75,7 +75,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:src="@drawable/home"
-            android:tint="@color/gris_texto" />
+            app:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnCitas"
@@ -85,7 +85,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:src="@drawable/calendar"
-            android:tint="@color/gris_texto" />
+            app:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnBuscar"
@@ -95,7 +95,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:src="@drawable/search"
-            android:tint="@color/gris_texto" />
+            app:tint="@color/gris_texto" />
 
         <ImageButton
             android:id="@+id/btnVehiculos"
@@ -105,7 +105,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:src="@drawable/car"
-            android:tint="@color/naranja" />
+            app:tint="@color/naranja" />
 
         <ImageButton
             android:id="@+id/btnUsuario"
@@ -115,7 +115,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="fitCenter"
             android:src="@drawable/user"
-            android:tint="@color/gris_texto" />
+            app:tint="@color/gris_texto" />
 
     </LinearLayout>
 

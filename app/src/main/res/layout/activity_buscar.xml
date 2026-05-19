@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:background="@drawable/input_background_white"
+            android:background="@drawable/card_background"
             android:hint="Buscar taller..."
             android:inputType="text"
             android:padding="10dp"

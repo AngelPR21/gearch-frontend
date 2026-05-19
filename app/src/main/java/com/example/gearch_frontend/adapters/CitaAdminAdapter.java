@@ -50,22 +50,22 @@ public class CitaAdminAdapter extends RecyclerView.Adapter<CitaAdminAdapter.View
         holder.tvFechaHora.setText(cita.getFechaHora());
 
         if (cita.getUsuario() != null) {
-            holder.tvCliente.setText(cita.getUsuario().getNombre() + " " + cita.getUsuario().getApellidos());
+            holder.tvCliente.setText("Cliente: " + cita.getUsuario().getNombre() + " " + cita.getUsuario().getApellidos());
         }
 
         if (cita.getServicio() != null) {
-            holder.tvServicio.setText(cita.getServicio().getNombre());
+            holder.tvServicio.setText("Servicio: " + cita.getServicio().getNombre());
         }
 
         // El vehiculo es opcional, si no tiene se oculta el TextView
         if (cita.getVehiculo() != null) {
-            holder.tvVehiculo.setText(cita.getVehiculo().getMarca() + " " + cita.getVehiculo().getModelo() + " - " + cita.getVehiculo().getMatricula());
+            holder.tvVehiculo.setText("Coche: " + cita.getVehiculo().getMarca() + " " + cita.getVehiculo().getModelo() + " - " + cita.getVehiculo().getMatricula());
         } else {
             holder.tvVehiculo.setVisibility(View.GONE);
         }
 
         if (cita.getNotas() != null && !cita.getNotas().isEmpty()) {
-            holder.tvNotas.setText(cita.getNotas());
+            holder.tvNotas.setText("Nota: " + cita.getNotas());
         } else {
             holder.tvNotas.setVisibility(View.GONE);
         }

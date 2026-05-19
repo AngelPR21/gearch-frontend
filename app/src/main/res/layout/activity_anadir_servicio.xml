@@ -41,7 +41,7 @@
                     android:layout_marginStart="8dp"
                     android:backgroundTint="@color/naranja"
                     android:text="Añadir servicio"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="24sp"
                     android:textStyle="bold" />
 

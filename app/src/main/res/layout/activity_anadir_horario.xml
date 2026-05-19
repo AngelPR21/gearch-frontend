@@ -51,7 +51,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Día de la semana"
-                android:textSize="16sp" />
+                android:textSize="16sp" 
+                    android:textColor="#1B1B2F"
+                />
 
             <Spinner
                 android:id="@+id/spinnerDia"
@@ -64,13 +66,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Hora de inicio"
-                android:textSize="16sp" />
+                android:textSize="16sp" 
+                    android:textColor="#1B1B2F"
+                />
 
             <Button
                 android:id="@+id/btnHoraInicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:textColor="@color/white"
                 android:text="09:00" />
 
             <TextView
@@ -78,13 +83,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="Hora de fin"
-                android:textSize="16sp" />
+                android:textSize="16sp" 
+                    android:textColor="#1B1B2F"
+                />
 
             <Button
                 android:id="@+id/btnHoraFin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
+                android:textColor="@color/white"
                 android:text="18:00" />
 
         </LinearLayout>

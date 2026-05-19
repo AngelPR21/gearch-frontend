@@ -12,14 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+            android:textColor="#1B1B2F"
+        />
 
     <TextView
         android:id="@+id/tvTaller"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textSize="14sp" />
+        android:textSize="14sp" 
+            android:textColor="#1B1B2F"
+        />
 
     <TextView
         android:id="@+id/tvServicio"
@@ -51,13 +55,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+            android:textColor="#1B1B2F"
+        />
 
     <Button
         android:id="@+id/btnCancelar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:textColor="@color/white"
         android:text="Cancelar cita" />
 
 </LinearLayout>

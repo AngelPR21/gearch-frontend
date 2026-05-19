@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+            android:textColor="#1B1B2F"
+        />
 
     <TextView
         android:id="@+id/tvDescripcionServicio"
@@ -28,6 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" 
+            android:textColor="#1B1B2F"
+        />
 
 </LinearLayout>

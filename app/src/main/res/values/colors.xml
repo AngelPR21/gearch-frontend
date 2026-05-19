@@ -3,10 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="naranja">#FF6B35</color>
-    <color name="negro">#1B1B2F</color>
     <color name="fondo">#F5F5F5</color>
     <color name="superficie">#FFFFFF</color>
     <color name="texto">#1B1B2F</color>
-    <color name="naranja_oscuro">#E55A28</color>
-    <color name="gris_texto">#888888</color>
+    <color name="gris_texto">#9D9D9D</color>
 </resources>

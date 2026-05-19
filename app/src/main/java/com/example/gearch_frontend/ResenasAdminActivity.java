@@ -57,7 +57,7 @@ public class ResenasAdminActivity extends AppCompatActivity {
 
                     // Calculamos la media de puntuacion
                     if (resenas.isEmpty()) {
-                        tvEstadisticas.setText("Puntuacion media: sin resenas todavia");
+                        tvEstadisticas.setText("Puntuación media: sin reseñas todavía");
                     } else {
                         double suma = 0;
                         for (Resena r : resenas) {

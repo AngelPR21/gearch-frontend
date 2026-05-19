@@ -77,8 +77,15 @@ public class MainClienteActivity extends AppCompatActivity {
         btnVehiculos.setOnClickListener(v -> startActivity(new Intent(this, MisVehiculosActivity.class)));
         btnUsuario.setOnClickListener(v -> startActivity(new Intent(this, PerfilActivity.class)));
 
-        cargarTalleresRecientes();
         pedirUbicacionYCargarCercanos();
+    }
+
+    // Se ejecuta cada vez que el usuario vuelve a esta pantalla
+    // Recargamos los talleres recientes para que aparezcan los nuevos tras una reserva
+    @Override
+    protected void onResume() {
+        super.onResume();
+        cargarTalleresRecientes();
     }
 
     // Carga los talleres en los que el usuario ha tenido citas anteriores
@@ -165,7 +172,7 @@ public class MainClienteActivity extends AppCompatActivity {
                 });
     }
 
-    // Llama al backend con las coordenadas y muestra los talleres en un radio de 10km
+    // Llama al backend con las coordenadas y muestra los talleres en un radio de 100km
     private void cargarTalleresCercanos(double lat, double lng) {
         api.getTalleresCercanos(lat, lng, 100).enqueue(new Callback<List<Taller>>() {
             @Override
