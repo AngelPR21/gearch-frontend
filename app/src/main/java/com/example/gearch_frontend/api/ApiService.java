@@ -28,7 +28,7 @@ public interface ApiService {
     // POST /api/usuarios/login
     // Recibe un Map con email y password, devuelve el usuario con sus datos y rol
     @POST("api/usuarios/login")
-    Call<Usuario> login(@Body Map<String, String> credenciales);
+    Call<Usuario> login(@Body Map<String, String> credenciales);//aunque se devuelva un map GSON lo intenta convertir a Usuario
 
     // POST /api/usuarios/registro/cliente
     @POST("api/usuarios/registro/cliente")

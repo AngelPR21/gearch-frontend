@@ -88,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Validamos que el email tenga un formato correcto
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            Toast.makeText(this, "Introduce un email valido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Introduce un email válido", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -167,16 +167,16 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(RegisterActivity.this, "Registro correcto, inicia sesion", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Registro correcto, inicia sesión", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Error al registrar, ese email ya esta en uso", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Error al registrar, ese email ya está en uso", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(RegisterActivity.this, "Error de conexion con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Error de conexión con el servidor", Toast.LENGTH_SHORT).show();
             }
         });
     }

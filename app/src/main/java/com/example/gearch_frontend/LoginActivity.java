@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 startActivity(new Intent(this, MainClienteActivity.class));
             }
-            finish();
-            return;
+            finish(); // cierra LoginActivity para que no quede en el historial de navegacion
+            return;   // evita ejecutar el resto del metodo onCreate
         }
 
         etEmail = findViewById(R.id.etEmail);
@@ -93,7 +93,9 @@ public class LoginActivity extends AppCompatActivity {
                     // Obtenemos el token de Firebase del dispositivo y lo enviamos al backend
                     // El token puede cambiar si el usuario reinstala la app o Firebase lo renueva
                     FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
+                        //operacion asincrona, cuando responda si el token es distinto de null llama al patch para añadir el token al usuario
                         if (token != null) {
+                            //lo actualiza siempre que se inicia sesion por si FCM lo ha cambiado
                             api.actualizarFcmToken(usuario.getId(), token).enqueue(new Callback<Void>() {
                                 @Override
                                 public void onResponse(Call<Void> call, Response<Void> response) {
@@ -122,13 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     finish();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Email o contrasena incorrectos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Email o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Error de conexion con el servidor", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Error de conexión con el servidor", Toast.LENGTH_SHORT).show();
             }
         });
     }
