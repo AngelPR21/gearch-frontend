@@ -63,8 +63,8 @@ public class MainClienteActivity extends AppCompatActivity {
         rvCercanos.setLayoutManager(new LinearLayoutManager(this));
 
         api = ApiClient.getClient().create(ApiService.class);
+        // FusedLocationProviderClient es el cliente de Google Play Services para obtener la ubicacion del dispositivo
         locationClient = LocationServices.getFusedLocationProviderClient(this);
-
         // Botones de navegacion inferior
         ImageButton btnHome = findViewById(R.id.btnHome);
         ImageButton btnCitas = findViewById(R.id.btnCitas);
@@ -114,15 +114,21 @@ public class MainClienteActivity extends AppCompatActivity {
                             }
                         }
                     }
-
+                    //se crea el adapter pasandole el contexto la lista y el onclick listener
                     adapterRecientes = new TallerRecienteAdapter(MainClienteActivity.this, talleresRecientes, v -> {
+                        //busca el ViewHolder de la card que se ha pulsado (v)
+                        //Se castea a TallerRecienteAdapter para poder tener el metodo getTaller()
                         TallerRecienteAdapter.ViewHolder vh = (TallerRecienteAdapter.ViewHolder) rvRecientes.findContainingViewHolder(v);
                         if (vh != null) {
+                            //Se crea un intent con el contexto y la actividad nueva
                             Intent intent = new Intent(MainClienteActivity.this, DetalleTallerActivity.class);
+                            //se le añade la id del taller para que pueda mostrar la info de ese taller, lo hacemos de esta forma para
+                            // que asi la info siempre este actualizada, si no al pasarle el objeto podria tener datos anteriores
                             intent.putExtra("tallerId", vh.getTaller().getId());
                             startActivity(intent);
                         }
                     });
+                    //se asigna el adapter al rv
                     rvRecientes.setAdapter(adapterRecientes);
                 }
             }
@@ -136,43 +142,59 @@ public class MainClienteActivity extends AppCompatActivity {
 
     // Comprueba si tiene permiso de ubicacion y lo pide si no lo tiene
     private void pedirUbicacionYCargarCercanos() {
+        // checkSelfPermission comprueba si el usuario ya concedio el permiso anteriormente
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
+            // Si no tiene permiso mostramos el dialogo del sistema para pedirlo
+            // PERMISO_UBICACION es el codigo que usaremos en onRequestPermissionsResult
+            // para identificar que este es el permiso que se esta respondiendo
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISO_UBICACION);
         } else {
+            // Si ya tiene permiso obtenemos la ubicacion directamente
             obtenerUbicacionYCargar();
         }
     }
 
     // Se ejecuta automaticamente cuando el usuario responde al dialogo de permiso
+    // requestCode identifica de que permiso viene la respuesta (puede haber varios permisos pedidos)
+    // grantResults contiene si el usuario acepto o denego cada permiso
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == PERMISO_UBICACION && grantResults.length > 0
-                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if (requestCode == PERMISO_UBICACION && grantResults.length > 0 //mayor que 0 porque android devuelve una lista y podria fallar si se cierra el texto de pedir permisos
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {//posicion 0 porque ahi esta el permiso que queremos
+            // El usuario acepto el permiso, obtenemos la ubicacion
             obtenerUbicacionYCargar();
         } else {
+            // El usuario denego el permiso, no podemos mostrar talleres cercanos
             Toast.makeText(this, "Permiso de ubicacion denegado", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Obtiene la ultima ubicacion conocida del dispositivo
+    // Obtiene la ubicacion actual del dispositivo y carga los talleres cercanos
     // En el emulador puede devolver null porque no tiene GPS real
     private void obtenerUbicacionYCargar() {
+        // Doble comprobacion del permiso requerida por Android antes de llamar a getCurrentLocation
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) return;
 
+        // PRIORITY_BALANCED_POWER_ACCURACY usa GPS + WiFi + red movil para obtener la ubicacion
+        // Es menos preciso que PRIORITY_HIGH_ACCURACY pero consume menos bateria
+        // El segundo parametro null es un CancellationToken para cancelar la peticion, no lo necesitamos
         locationClient.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null)
                 .addOnSuccessListener(ubicacion -> {
                     if (ubicacion != null) {
+                        // Enviamos las coordenadas al backend para buscar talleres en un radio de 100km
                         cargarTalleresCercanos(ubicacion.getLatitude(), ubicacion.getLongitude());
                     } else {
+                        // Puede ocurrir en el emulador al no tener GPS real configurado
                         Toast.makeText(MainClienteActivity.this, "No se pudo obtener la ubicacion", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
-    // Llama al backend con las coordenadas y muestra los talleres en un radio de 100km
+    // Llama al backend con las coordenadas y muestra los talleres en un radio de 10km
+    // (He puesto 100 para hacer pruebas pero lo normal seria 10)
     private void cargarTalleresCercanos(double lat, double lng) {
         api.getTalleresCercanos(lat, lng, 100).enqueue(new Callback<List<Taller>>() {
             @Override
